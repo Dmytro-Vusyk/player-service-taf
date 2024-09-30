@@ -10,11 +10,11 @@ import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+//TODO:fix this annotations
 @Feature("Create Player")
 @Story("Admin or Supervisor is able to create Player")
 public class CreatePlayerTest extends PlayerServiceTestSpec {
@@ -36,7 +36,7 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
      * 2. Assert that status code is 200
      * 3. Assert that response schema is as expected
      */
-    @Description(useJavaDoc = true)
+    @Description("User with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-1234")
     @Issue("PS-1235")
