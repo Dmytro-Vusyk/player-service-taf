@@ -3,6 +3,7 @@ package com.companyname.endpoints;
 import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -67,12 +68,14 @@ public class PlayerControllerEndpoint {
     //TODO: move method to DTO base class
     private static Map<String, String> convertToMap(Object dto) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(dto, new TypeReference<Map<String, String>>() {});
+        return objectMapper.convertValue(dto, new TypeReference<Map<String, String>>() {
+        });
     }
 
     private void constructRequestSpec() {
         this.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
+                .addFilter(new AllureRestAssured())
                 .log(LogDetail.ALL)
                 .build();
     }

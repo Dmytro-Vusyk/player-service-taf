@@ -37,6 +37,7 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
     @Description("As admin or supervisor I want to be able to create a player")
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-1234")
+    @Issue("PS-1235")
     @TmsLink("PS-321")
     @Tags(@Tag("smoke"))
     @Test(dataProvider = "roleProvider")
