@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests;
 
+import com.companyname.TestGroups;
 import com.companyname.enums.PlayerEditors;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
@@ -7,8 +8,9 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -34,17 +36,15 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
      * 2. Assert that status code is 200
      * 3. Assert that response schema is as expected
      */
-    @Description("As admin or supervisor I want to be able to create a player")
+    @Description(useJavaDoc = true)
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-1234")
     @Issue("PS-1235")
     @TmsLink("PS-321")
-    @Tags(@Tag("smoke"))
-    @Test(dataProvider = "roleProvider")
+    @Tags(@Tag(TestGroups.SMOKE))
+    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE})
     public void verifyThatPlayerCanBeCreated(String role) {
-
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-
         var actualResponse = this.playerControllerEndpoint.createPlayer(
                 role,
                 expectedPlayer,
@@ -55,10 +55,9 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
                 .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
     }
 
-    @Step("Cleanup: delete user with id: {createdPlayerId}")
-    @AfterTest
-    void cleanup() {
-        this.playerControllerEndpoint.deletePlayer(PlayerEditors.SUPERVISOR.getValue(), createdPlayerId)
+    @AfterMethod()
+    void cleanupTest(Object[] args) {
+        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId)
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
