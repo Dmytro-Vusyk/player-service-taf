@@ -1,8 +1,12 @@
 package com.companyname.endpoints;
 
+import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
@@ -24,12 +28,6 @@ public class PlayerControllerEndpoint {
         constructRequestSpec();
     }
 
-    private void constructRequestSpec() {
-        this.requestSpecification = RestAssured.given()
-                .baseUri(baseUrl)
-                .log().all();
-    }
-
     public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player, int expectedStatusCode) {
         var url = String.format(CREATE_PLAYER_URL, editor);
         var playerFieldsMap = convertToMap(player);
@@ -42,8 +40,16 @@ public class PlayerControllerEndpoint {
                 .statusCode(expectedStatusCode);
     }
 
-    public void deletePlayer() {
-
+    public ValidatableResponse deletePlayer(String editor, Long id) {
+        var url = String.format(DELETE_PLAYER_URL, editor);
+        var playerToDelete = new PlayerDeleteRequestDTO(id);
+        return RestAssured
+                .given(this.requestSpecification)
+                .contentType(ContentType.JSON)
+                .body(playerToDelete)
+                .when()
+                .delete(url)
+                .then();
     }
 
     public void getPlayerById() {
@@ -62,5 +68,12 @@ public class PlayerControllerEndpoint {
     private static Map<String, String> convertToMap(Object dto) {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.convertValue(dto, new TypeReference<Map<String, String>>() {});
+    }
+
+    private void constructRequestSpec() {
+        this.requestSpecification = new RequestSpecBuilder()
+                .setBaseUri(baseUrl)
+                .log(LogDetail.ALL)
+                .build();
     }
 }
