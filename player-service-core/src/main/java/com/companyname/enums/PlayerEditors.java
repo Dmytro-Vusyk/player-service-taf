@@ -1,12 +1,12 @@
 package com.companyname.enums;
 
-public enum PlayerEditor {
+public enum PlayerEditors {
     ADMIN("admin"),
     SUPERVISOR("supervisor");
 
     private final String value;
 
-    PlayerEditor(String value) {
+    PlayerEditors(String value) {
         this.value = value;
     }
 
