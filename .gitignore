@@ -57,3 +57,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /.idea/
+player-service-test/.allure/
