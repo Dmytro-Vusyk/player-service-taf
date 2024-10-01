@@ -1,9 +1,11 @@
 package com.companyname.models.playerserviceapi;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class PlayerCreateResponseDTO {
+@EqualsAndHashCode(callSuper = true)
+public class PlayerCreateResponseDTO extends BaseDTO {
     private Integer age;
     private String gender;
     private Long id;

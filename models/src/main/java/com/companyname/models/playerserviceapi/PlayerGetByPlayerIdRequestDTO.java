@@ -2,9 +2,11 @@ package com.companyname.models.playerserviceapi;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @AllArgsConstructor
-public class PlayerGetByPlayerIdRequestDTO {
+@EqualsAndHashCode(callSuper = true)
+public class PlayerGetByPlayerIdRequestDTO extends BaseDTO {
     private Long playerId;
 }

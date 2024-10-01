@@ -2,10 +2,12 @@ package com.companyname.models.playerserviceapi;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Builder
-public class PlayerUpdateRequestDTO {
+@EqualsAndHashCode(callSuper = true)
+public class PlayerUpdateRequestDTO extends BaseDTO {
     private int age;
     private String gender;
     private String login;
