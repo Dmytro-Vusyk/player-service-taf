@@ -38,21 +38,39 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
      */
     @Description("User with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)
-    @Issue("PS-1234")
-    @Issue("PS-1235")
-    @TmsLink("PS-321")
+    @Issue("PS-1234")   //Issue id of bug "Admin has no rights to create player"
+    @Issue("PS-1235")   //Issue id of bug "Fields with null values are returned in response"
+    @TmsLink("PS-321") //Test case id in TMS
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE})
+    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void verifyThatPlayerCanBeCreated(String role) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var actualResponse = this.playerControllerEndpoint.createPlayer(
                 role,
                 expectedPlayer,
                 HttpStatus.SC_OK);
-        var actualPlayer = actualResponse.extract().as(PlayerCreateResponseDTO.class);
+        var actualPlayer = actualResponse.extract()
+                .as(PlayerCreateResponseDTO.class);
         createdPlayerId = actualPlayer.getId();
         actualResponse.assertThat()
                 .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
+    }
+
+    @Description("User with different roles are able to CREATE Player with required fields only")
+    @Severity(SeverityLevel.CRITICAL)
+    @Issue("PS-1234")   //Issue id of bug "Admin has no rights to create player"
+    @TmsLink("PS-322") //Test case id in TMS
+    @Tags(@Tag(TestGroups.SMOKE))
+    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    public void verifyThatPlayerCanBeCreatedWithRequiredFieldsOnly(String role) {
+        var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
+        var actualResponse = this.playerControllerEndpoint.createPlayer(
+                role,
+                expectedPlayer,
+                HttpStatus.SC_OK);
+        createdPlayerId = actualResponse.extract()
+                .as(PlayerCreateResponseDTO.class)
+                .getId();
     }
 
     @AfterMethod()
