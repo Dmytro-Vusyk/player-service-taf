@@ -1,15 +1,12 @@
 package com.companyname.playerservice.functionaltests.update;
 
-import com.companyname.testutils.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.TmsLink;
+import com.companyname.testutils.TestGroups;
+import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
@@ -20,6 +17,8 @@ import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+@Feature("Update Player")
+@Story("API consumer is able to update Player")
 public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;

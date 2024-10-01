@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.get;
 
-import com.companyname.testutils.TestGroups;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
@@ -10,6 +10,8 @@ import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
+@Feature("Get Player")
+@Story("API consumer is able to get all Players")
 public class GetAllPlayersTests extends PlayerServiceTestSpec {
 
     @Description("GET All players call returns data as expected")

@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.get;
 
-import com.companyname.testutils.TestGroups;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.TestGroups;
 import com.companyname.utils.Faker;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -9,6 +9,8 @@ import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
+@Feature("Get Player")
+@Story("API consumer is able to get Player")
 public class GetPlayerByIdNegativeTests extends PlayerServiceTestSpec {
 
     @Description("Player controller api returns NOT_FOUND when GET operation is performed on non existent player")
