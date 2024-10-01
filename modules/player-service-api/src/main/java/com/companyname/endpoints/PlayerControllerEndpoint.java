@@ -1,8 +1,9 @@
 package com.companyname.endpoints;
 
+import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdRequestDTO;
+import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -10,10 +11,10 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
 
-import java.util.Map;
-
+/**
+ * This class describes realization of the type Player controller endpoint.
+ */
 public class PlayerControllerEndpoint {
     private final String baseUrl;
     private final String CREATE_PLAYER_URL = "/player/create/%s";
@@ -24,14 +25,27 @@ public class PlayerControllerEndpoint {
     private RequestSpecification requestSpecification;
 
 
+    /**
+     * Instantiates a new Player controller endpoint.
+     *
+     * @param baseUrl the base url
+     */
     public PlayerControllerEndpoint(String baseUrl) {
         this.baseUrl = baseUrl;
         constructRequestSpec();
     }
 
+    /**
+     * Send GET request to create player.
+     *
+     * @param editor             the editor
+     * @param player             the player
+     * @param expectedStatusCode the expected status code
+     * @return the {@link ValidatableResponse}
+     */
     public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player, int expectedStatusCode) {
         var url = String.format(CREATE_PLAYER_URL, editor);
-        var playerFieldsMap = convertToMap(player);
+        var playerFieldsMap = player.convertToMap();
         return RestAssured
                 .given(this.requestSpecification)
                 .params(playerFieldsMap)
@@ -41,6 +55,13 @@ public class PlayerControllerEndpoint {
                 .statusCode(expectedStatusCode);
     }
 
+    /**
+     * Send DELETE player request.
+     *
+     * @param editor the editor
+     * @param id     the id
+     * @return the validatable response
+     */
     public ValidatableResponse deletePlayer(String editor, Long id) {
         var url = String.format(DELETE_PLAYER_URL, editor);
         var playerToDelete = new PlayerDeleteRequestDTO(id);
@@ -53,23 +74,52 @@ public class PlayerControllerEndpoint {
                 .then();
     }
 
-    public void getPlayerById() {
-
+    /**
+     * Send GET request to get player by id.
+     *
+     * @param id the id
+     * @return the player by id
+     */
+    public ValidatableResponse getPlayerById(Long id) {
+        var playerToGet = new PlayerGetByPlayerIdRequestDTO(id);
+        return RestAssured
+                .given(this.requestSpecification)
+                .contentType(ContentType.JSON)
+                .body(playerToGet)
+                .when()
+                .post(GET_PLAYER_URL)
+                .then();
     }
 
-    public void getAllPlayers() {
-
+    /**
+     * Send GET all players request.
+     *
+     * @return the all players
+     */
+    public ValidatableResponse getAllPlayers() {
+        return RestAssured
+                .given(this.requestSpecification)
+                .when()
+                .get(GET_ALL_PLAYERS_URL)
+                .then();
     }
 
-    public void updatePlayer() {
-
-    }
-
-    //TODO: move method to DTO base class
-    private static Map<String, String> convertToMap(Object dto) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(dto, new TypeReference<Map<String, String>>() {
-        });
+    /**
+     * Send UPDATE player requset.
+     *
+     * @param editor the editor
+     * @param id     the id
+     * @param player the {@link PlayerUpdateRequestDTO} with fields to update
+     * @return the validatable response
+     */
+    public ValidatableResponse updatePlayer(String editor, Long id, PlayerUpdateRequestDTO player) {
+        var url = String.format(UPDATE_PLAYER_URL, editor, id);
+        return RestAssured
+                .given(this.requestSpecification)
+                .body(player)
+                .when()
+                .patch(url)
+                .then();
     }
 
     private void constructRequestSpec() {
