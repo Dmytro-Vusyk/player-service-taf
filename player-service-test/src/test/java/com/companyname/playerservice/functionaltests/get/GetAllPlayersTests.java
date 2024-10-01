@@ -22,6 +22,6 @@ public class GetAllPlayersTests extends PlayerServiceTestSpec {
         this.playerControllerEndpoint.getAllPlayers()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/get-all-players-response.json"));;
+                .body(matchesJsonSchemaInClasspath("playerservice/schemas/get-all-players-response.json"));
     }
 }

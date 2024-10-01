@@ -14,6 +14,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
@@ -38,6 +40,8 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
         Assertions.assertThat(playerByIdResponse.extract().statusCode())
                 .as("Verify that API responded with status code 200")
                 .isEqualTo(HttpStatus.SC_OK);
+        playerByIdResponse.assertThat()
+                .body(matchesJsonSchemaInClasspath("playerservice/schemas/get-player-by-id-response.json"));
 
         var actualPlayer = playerByIdResponse.extract().body().as(PlayerGetByPlayerIdResponseDTO.class);
 
