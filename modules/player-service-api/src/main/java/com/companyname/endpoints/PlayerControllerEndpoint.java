@@ -7,11 +7,9 @@ import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
-import io.restassured.internal.LogRequestAndResponseOnFailListener;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 
@@ -43,10 +41,9 @@ public class PlayerControllerEndpoint {
      *
      * @param editor             the editor
      * @param player             the player
-     * @param expectedStatusCode the expected status code
      * @return the {@link ValidatableResponse}
      */
-    public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player, int expectedStatusCode) {
+    public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player) {
         var url = String.format(CREATE_PLAYER_URL, editor);
         var playerFieldsMap = player.convertToMap();
         return RestAssured
@@ -54,8 +51,7 @@ public class PlayerControllerEndpoint {
                 .params(playerFieldsMap)
                 .when()
                 .get(url)
-                .then()
-                .statusCode(expectedStatusCode);
+                .then();
     }
 
     /**
@@ -70,7 +66,6 @@ public class PlayerControllerEndpoint {
         var playerToDelete = new PlayerDeleteRequestDTO(id);
         return RestAssured
                 .given(this.requestSpecification)
-                .contentType(ContentType.JSON)
                 .body(playerToDelete)
                 .when()
                 .delete(url)
@@ -87,7 +82,6 @@ public class PlayerControllerEndpoint {
         var playerToGet = new PlayerGetByPlayerIdRequestDTO(id);
         return RestAssured
                 .given(this.requestSpecification)
-                .contentType(ContentType.JSON)
                 .body(playerToGet)
                 .when()
                 .post(GET_PLAYER_URL)
@@ -131,6 +125,7 @@ public class PlayerControllerEndpoint {
                 .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())
+                .setContentType(ContentType.JSON)
                 .build();
     }
 }
