@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PlayerCreateRequestDTO {
+public class PlayerCreateRequestDTO extends BaseDTO {
     private String age;
     private String editor;
     private String gender;
