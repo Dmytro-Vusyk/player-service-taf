@@ -4,6 +4,7 @@ import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
+import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -43,6 +44,7 @@ public class PlayerControllerEndpoint {
      * @param player             the player
      * @return the {@link ValidatableResponse}
      */
+    @Step("Execute GET request to CREATE player")
     public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player) {
         var url = String.format(CREATE_PLAYER_URL, editor);
         var playerFieldsMap = player.convertToMap();
@@ -61,6 +63,7 @@ public class PlayerControllerEndpoint {
      * @param id     the id
      * @return the validatable response
      */
+    @Step("Execute DELETE request to DELETE player")
     public ValidatableResponse deletePlayer(String editor, Long id) {
         var url = String.format(DELETE_PLAYER_URL, editor);
         var playerToDelete = new PlayerDeleteRequestDTO(id);
@@ -78,6 +81,7 @@ public class PlayerControllerEndpoint {
      * @param id the id
      * @return the player by id
      */
+    @Step("Execute POST request to GET player by id")
     public ValidatableResponse getPlayerById(Long id) {
         var playerToGet = new PlayerGetByPlayerIdRequestDTO(id);
         return RestAssured
@@ -93,6 +97,7 @@ public class PlayerControllerEndpoint {
      *
      * @return the all players
      */
+    @Step("Execute GET request to GET all players")
     public ValidatableResponse getAllPlayers() {
         return RestAssured
                 .given(this.requestSpecification)
@@ -109,6 +114,7 @@ public class PlayerControllerEndpoint {
      * @param player the {@link PlayerUpdateRequestDTO} with fields to update
      * @return the validatable response
      */
+    @Step("Execute PATCH request to UPDATE player")
     public ValidatableResponse updatePlayer(String editor, Long id, PlayerUpdateRequestDTO player) {
         var url = String.format(UPDATE_PLAYER_URL, editor, id);
         return RestAssured
