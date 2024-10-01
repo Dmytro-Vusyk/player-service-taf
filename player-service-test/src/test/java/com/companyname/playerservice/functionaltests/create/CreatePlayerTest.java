@@ -1,7 +1,6 @@
 package com.companyname.playerservice.functionaltests.create;
 
 import com.companyname.TestGroups;
-import com.companyname.enums.PlayerEditors;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
@@ -10,7 +9,6 @@ import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -21,14 +19,6 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 public class CreatePlayerTest extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
-
-    @DataProvider(name = "roleProvider")
-    public Object[][] roleProvider() {
-        return new Object[][]{
-                {PlayerEditors.SUPERVISOR.getValue()},
-                {PlayerEditors.ADMIN.getValue()}
-        };
-    }
 
     /**
      * As admin or supervisor I want to be able to create a player
