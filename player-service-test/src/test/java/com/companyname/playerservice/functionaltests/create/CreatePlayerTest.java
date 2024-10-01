@@ -36,13 +36,11 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
     @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void verifyThatPlayerCanBeCreated(String role) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(
-                role,
-                expectedPlayer,
-                HttpStatus.SC_OK);
-        var actualPlayer = actualResponse.extract()
-                .as(PlayerCreateResponseDTO.class);
-        createdPlayerId = actualPlayer.getId();
+        var actualResponse = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        actualResponse.statusCode(HttpStatus.SC_OK);
+        createdPlayerId = actualResponse.extract()
+                .as(PlayerCreateResponseDTO.class)
+                .getId();
         actualResponse.assertThat()
                 .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
     }
@@ -55,13 +53,13 @@ public class CreatePlayerTest extends PlayerServiceTestSpec {
     @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void verifyThatPlayerCanBeCreatedWithRequiredFieldsOnly(String role) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(
-                role,
-                expectedPlayer,
-                HttpStatus.SC_OK);
+        var actualResponse = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        actualResponse.statusCode(HttpStatus.SC_OK);
         createdPlayerId = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
+        actualResponse.assertThat()
+                .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
     }
 
     @AfterMethod()
