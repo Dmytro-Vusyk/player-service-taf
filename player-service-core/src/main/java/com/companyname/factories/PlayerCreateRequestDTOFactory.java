@@ -21,6 +21,18 @@ public class PlayerCreateRequestDTOFactory {
                 .build();
     }
 
+    public static PlayerCreateRequestDTO createPlayerWithRequiredFieldsOnly() {
+        return PlayerCreateRequestDTO.builder()
+                .age(String.valueOf(faker.number().numberBetween(18, 60)))
+                .editor(faker.options().option(PlayerEditors.class).getValue())
+                //TODO: refactor gender to enum
+                .gender(faker.options().option("Male", "Female", "Other"))
+                .login(faker.funnyName().name())
+                .role(UserRoles.USER.getValue())
+                .screenName(faker.letterify("?????"))
+                .build();
+    }
+
     public static PlayerCreateRequestDTO createCustomPlayer(String age, String editor, String gender, String login, String password, String role, String screenName) {
         return PlayerCreateRequestDTO.builder()
                 .age(age)
