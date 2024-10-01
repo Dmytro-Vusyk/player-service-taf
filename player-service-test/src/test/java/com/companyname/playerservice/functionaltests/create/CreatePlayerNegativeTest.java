@@ -1,6 +1,6 @@
 package com.companyname.playerservice.functionaltests.create;
 
-import com.companyname.TestGroups;
+import com.companyname.testutils.TestGroups;
 import com.companyname.enums.PlayerEditors;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;

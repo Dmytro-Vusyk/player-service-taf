@@ -1,4 +1,4 @@
-package com.companyname;
+package com.companyname.testutils;
 
 public class TestGroups {
     public static final String SMOKE = "SMOKE";

@@ -1,6 +1,6 @@
 package com.companyname.playerservice.functionaltests.delete;
 
-import com.companyname.TestGroups;
+import com.companyname.testutils.TestGroups;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.utils.Faker;
 import io.qameta.allure.*;

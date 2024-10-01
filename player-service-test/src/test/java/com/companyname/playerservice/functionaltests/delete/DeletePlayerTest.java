@@ -1,6 +1,6 @@
 package com.companyname.playerservice.functionaltests.delete;
 
-import com.companyname.TestGroups;
+import com.companyname.testutils.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerItemDTO;

@@ -1,6 +1,6 @@
 package com.companyname.playerservice.functionaltests.get;
 
-import com.companyname.TestGroups;
+import com.companyname.testutils.TestGroups;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
