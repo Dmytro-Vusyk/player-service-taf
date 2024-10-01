@@ -32,7 +32,7 @@ public class CreatePlayerNegativeTest extends PlayerServiceTestSpec {
     @Issue("PS-12345")
     @TmsLink("PS-324")
     @Tags(@Tag(TestGroups.BUG))
-    @Test(groups = {TestGroups.BUG})
+    @Test(groups = {TestGroups.BUG, TestGroups.REG})
     public void verifyThatEditorCanCreatePlayerOlderThan(){
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         expectedPlayer.setAge("61");
