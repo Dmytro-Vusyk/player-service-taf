@@ -1,7 +1,8 @@
-package com.companyname.playerservice.functionaltests;
+package com.companyname.playerservice.functionaltests.create;
 
 import com.companyname.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
