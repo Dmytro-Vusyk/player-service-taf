@@ -1,5 +1,8 @@
 package com.companyname.enums;
 
+/**
+ * The enum that represents Player editors.
+ */
 public enum PlayerEditors {
     ADMIN("admin"),
     SUPERVISOR("supervisor");

@@ -1,7 +1,11 @@
 package com.companyname.enums;
 
+/**
+ * The enum that represents User roles.
+ */
 public enum UserRoles {
-    USER("user");
+    USER("user"),
+    ADMIN("admin");
 
     private final String value;
 
