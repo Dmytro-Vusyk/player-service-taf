@@ -1,6 +1,7 @@
 package com.companyname.playerservice.functionaltests.get;
 
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.SchemaPath;
 import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -24,6 +25,6 @@ public class GetAllPlayersTests extends PlayerServiceTestSpec {
         this.playerControllerEndpoint.getAllPlayers()
                 .statusCode(HttpStatus.SC_OK)
                 .assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/get-all-players-response.json"));
+                .body(matchesJsonSchemaInClasspath(SchemaPath.GET_ALL_PLAYERS_RESPONSE_SCHEMA));
     }
 }

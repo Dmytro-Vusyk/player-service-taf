@@ -5,6 +5,7 @@ import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.SchemaPath;
 import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -23,12 +24,12 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
 
-    @Description("Editor is able to UPDATE Player")
+    @Description("Verify that editor is able to UPDATE Player")
     @Severity(SeverityLevel.CRITICAL)
     @TmsLink("PS-322")
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void testUpdatePlayer(String editor) {
+    public void testEditorCanUpdatePlayer(String editor) {
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var createdPlayer = this.playerControllerEndpoint.createPlayer(editor, defaultPlayer)
                 .statusCode(HttpStatus.SC_OK)
@@ -54,7 +55,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
                 .as("Verify Status Code is 200")
                 .isEqualTo(HttpStatus.SC_OK);
         playerUpdateResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/update-player-response.json"));
+                .body(matchesJsonSchemaInClasspath(SchemaPath.UPDATE_PLAYER_RESPONSE_SCHEMA));
 
         var actualPlayer = this.playerControllerEndpoint.getPlayerById(createdPlayer.getId())
                 .statusCode(HttpStatus.SC_OK)

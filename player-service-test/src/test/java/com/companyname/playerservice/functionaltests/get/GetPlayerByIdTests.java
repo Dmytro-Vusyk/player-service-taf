@@ -4,6 +4,7 @@ import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.SchemaPath;
 import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -43,7 +44,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
                 .as("Verify that API responded with status code 200")
                 .isEqualTo(HttpStatus.SC_OK);
         playerByIdResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/get-player-by-id-response.json"));
+                .body(matchesJsonSchemaInClasspath(SchemaPath.GET_PLAYER_BY_ID_RESPONSE_SCHEMA));
 
         var actualPlayer = playerByIdResponse.extract().body().as(PlayerGetByPlayerIdResponseDTO.class);
 

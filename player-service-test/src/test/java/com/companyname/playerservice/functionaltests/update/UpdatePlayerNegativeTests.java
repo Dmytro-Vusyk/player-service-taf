@@ -15,13 +15,13 @@ import org.testng.annotations.Test;
 @Story("API consumer is able to update Player")
 public class UpdatePlayerNegativeTests extends PlayerServiceTestSpec {
 
-    @Description("Player controller api returns NOT_FOUND when UPDATE operation is performed on non existent user")
+    @Description("Verify that player controller api returns NOT_FOUND when UPDATE operation is performed on non existent user")
     @Severity(SeverityLevel.NORMAL)
     @Issue("PS-12376") //issue for "200 OK status code is returned if update nonexistent user id"
     @TmsLink("PS-327")
     @Tags(@Tag(TestGroups.NEGATIVE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
-    public void testPlayerUpdateInvalidId(String editor) {
+    public void testEditorCanNotUpdatePlayerByInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var playerToUpdate = PlayerUpdateRequestDTO.builder()

@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.create;
 
+import com.companyname.testutils.SchemaPath;
 import com.companyname.testutils.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
@@ -34,7 +35,7 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
         actualResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
+                .body(matchesJsonSchemaInClasspath(SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA));
     }
 
     @Description("Verify That user with different roles are able to CREATE Player with required fields only")
@@ -51,7 +52,7 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
         actualResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
+                .body(matchesJsonSchemaInClasspath(SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA));
     }
 
     @AfterMethod()
