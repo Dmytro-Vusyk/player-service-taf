@@ -13,11 +13,14 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class describes realization of the type Player controller endpoint.
  */
 public class PlayerControllerEndpoint {
+    private static final Logger logger = LoggerFactory.getLogger(PlayerControllerEndpoint.class);
     private final String baseUrl;
     private final String CREATE_PLAYER_URL = "/player/create/%s";
     private final String DELETE_PLAYER_URL = "/player/delete/%s";
@@ -33,6 +36,7 @@ public class PlayerControllerEndpoint {
      * @param baseUrl the base url
      */
     public PlayerControllerEndpoint(String baseUrl) {
+        logger.info("Constructing Endpoint using base url: {}", baseUrl);
         this.baseUrl = baseUrl;
         constructRequestSpec();
     }
@@ -40,13 +44,14 @@ public class PlayerControllerEndpoint {
     /**
      * Send GET request to create player.
      *
-     * @param editor             the editor
-     * @param player             the player
+     * @param editor the editor
+     * @param player the player
      * @return the {@link ValidatableResponse}
      */
     @Step("Execute GET request to CREATE player")
     public ValidatableResponse createPlayer(String editor, PlayerCreateRequestDTO player) {
         var url = String.format(CREATE_PLAYER_URL, editor);
+        logger.debug("Executing CREATE player request for url: {}", url);
         var playerFieldsMap = player.convertToMap();
         return RestAssured
                 .given(this.requestSpecification)
@@ -66,6 +71,7 @@ public class PlayerControllerEndpoint {
     @Step("Execute DELETE request to DELETE player")
     public ValidatableResponse deletePlayer(String editor, Long id) {
         var url = String.format(DELETE_PLAYER_URL, editor);
+        logger.debug("Executing DELETE player request for url: {}", url);
         var playerToDelete = new PlayerDeleteRequestDTO(id);
         return RestAssured
                 .given(this.requestSpecification)
@@ -83,6 +89,7 @@ public class PlayerControllerEndpoint {
      */
     @Step("Execute POST request to GET player by id")
     public ValidatableResponse getPlayerById(Long id) {
+        logger.debug("Executing POST player request to GET player");
         var playerToGet = new PlayerGetByPlayerIdRequestDTO(id);
         return RestAssured
                 .given(this.requestSpecification)
@@ -99,6 +106,7 @@ public class PlayerControllerEndpoint {
      */
     @Step("Execute GET request to GET all players")
     public ValidatableResponse getAllPlayers() {
+        logger.debug("Executing GET player request to GET all players");
         return RestAssured
                 .given(this.requestSpecification)
                 .when()
@@ -107,7 +115,7 @@ public class PlayerControllerEndpoint {
     }
 
     /**
-     * Send UPDATE player requset.
+     * Send UPDATE player request.
      *
      * @param editor the editor
      * @param id     the id
@@ -117,6 +125,7 @@ public class PlayerControllerEndpoint {
     @Step("Execute PATCH request to UPDATE player")
     public ValidatableResponse updatePlayer(String editor, Long id, PlayerUpdateRequestDTO player) {
         var url = String.format(UPDATE_PLAYER_URL, editor, id);
+        logger.debug("Executing PATCH player request to UPDATE player: {}", url);
         return RestAssured
                 .given(this.requestSpecification)
                 .body(player)
@@ -126,6 +135,7 @@ public class PlayerControllerEndpoint {
     }
 
     private void constructRequestSpec() {
+        logger.debug("Set up request specification");
         this.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .addFilter(new AllureRestAssured())
