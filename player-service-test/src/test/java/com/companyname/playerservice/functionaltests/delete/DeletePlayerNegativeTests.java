@@ -13,14 +13,14 @@ import org.testng.annotations.Test;
 @Story("Admin or Supervisor is able to delete Player")
 public class DeletePlayerNegativeTests extends PlayerServiceTestSpec {
 
-    @Description("Player controller api returns NOT_FOUND when DELETE operation is performed on non existent user")
+    @Description("Verify that player controller api returns NOT_FOUND when DELETE operation is performed on non existent user")
     @Severity(SeverityLevel.NORMAL)
     @TmsLink("PS-327")
     @Tags(@Tag(TestGroups.NEGATIVE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.NEGATIVE})
-    public void test(String role) {
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
+    public void testDeletePlayerByInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        this.playerControllerEndpoint.deletePlayer(role, randomPlayerId)
+        this.playerControllerEndpoint.deletePlayer(editor, randomPlayerId)
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 }

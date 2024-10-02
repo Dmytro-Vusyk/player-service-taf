@@ -13,30 +13,22 @@ import org.testng.annotations.Test;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-//TODO:fix this annotations
 @Feature("Create Player")
 @Story("Admin or Supervisor is able to create Player")
 public class CreatePlayerTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
 
-    /**
-     * As admin or supervisor I want to be able to create a player
-     * This test case reproduces following steps:
-     * 1. Make GET call to create player
-     * 2. Assert that status code is 200
-     * 3. Assert that response schema is as expected
-     */
-    @Description("User with different roles are able to CREATE Players")
+    @Description("Verify that user with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-1234")   //Issue id of bug "Admin has no rights to create player"
     @Issue("PS-1235")   //Issue id of bug "Fields with null values are returned in response"
     @TmsLink("PS-321") //Test case id in TMS
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void verifyThatPlayerCanBeCreated(String role) {
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    public void testPlayerWithAllFieldsCanBeCreated(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
         actualResponse.statusCode(HttpStatus.SC_OK);
         createdPlayerId = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
@@ -45,15 +37,15 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
                 .body(matchesJsonSchemaInClasspath("playerservice/schemas/create-player-response.json"));
     }
 
-    @Description("User with different roles are able to CREATE Player with required fields only")
+    @Description("Verify That user with different roles are able to CREATE Player with required fields only")
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-1234")   //Issue id of bug "Admin has no rights to create player"
     @TmsLink("PS-322") //Test case id in TMS
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void verifyThatPlayerCanBeCreatedWithRequiredFieldsOnly(String role) {
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    public void testPlayerCanBeCreatedWithRequiredFieldsOnly(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
         actualResponse.statusCode(HttpStatus.SC_OK);
         createdPlayerId = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)

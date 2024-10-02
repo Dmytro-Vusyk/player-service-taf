@@ -20,7 +20,7 @@ public class UpdatePlayerNegativeTests extends PlayerServiceTestSpec {
     @Issue("PS-12376") //issue for "200 OK status code is returned if update nonexistent user id"
     @TmsLink("PS-327")
     @Tags(@Tag(TestGroups.NEGATIVE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.NEGATIVE})
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
     public void testPlayerUpdateInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();

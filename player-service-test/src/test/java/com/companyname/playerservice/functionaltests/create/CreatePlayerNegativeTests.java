@@ -14,12 +14,12 @@ import org.testng.annotations.Test;
 @Story("Admin or Supervisor is able to create Player")
 public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
 
-    @Description("Invalid editor is not able to CREATE a Player")
+    @Description("Verify that invalid editor is not able to CREATE a Player")
     @Severity(SeverityLevel.NORMAL)
     @TmsLink("PS-323") //Test case id in TMS
     @Tags(@Tag(TestGroups.NEGATIVE))
     @Test(groups = {TestGroups.NEGATIVE, TestGroups.BVT})
-    public void verifyThatInvalidEditorCanNotCreatePlayer() {
+    public void testInvalidEditorCanNotCreatePlayer() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var role = "GOD";
         this.playerControllerEndpoint
@@ -33,7 +33,7 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     @TmsLink("PS-324")
     @Tags(@Tag(TestGroups.BUG))
     @Test(groups = {TestGroups.BUG, TestGroups.REG})
-    public void verifyThatEditorCanCreatePlayerOlderThan(){
+    public void testEditorCanCreatePlayerOlderThan(){
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         expectedPlayer.setAge("61");
         this.playerControllerEndpoint

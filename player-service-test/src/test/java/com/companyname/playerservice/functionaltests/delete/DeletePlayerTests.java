@@ -18,20 +18,20 @@ import org.testng.annotations.Test;
 @Story("Admin or Supervisor is able to delete Player")
 public class DeletePlayerTests extends PlayerServiceTestSpec {
 
-    @Description("User with different roles are able to CREATE Players")
+    @Description("Verify that user with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)
     @TmsLink("PS-326") //Test case id in TMS
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void test(String role) {
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    public void test(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualPlayerId = this.playerControllerEndpoint.createPlayer(role, expectedPlayer)
+        var actualPlayerId = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer)
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
 
-        var deleteResponse = this.playerControllerEndpoint.deletePlayer(role, actualPlayerId);
+        var deleteResponse = this.playerControllerEndpoint.deletePlayer(editor, actualPlayerId);
 
         SoftAssertions.assertSoftly(assertions -> {
             assertions.assertThat(deleteResponse.extract().statusCode())

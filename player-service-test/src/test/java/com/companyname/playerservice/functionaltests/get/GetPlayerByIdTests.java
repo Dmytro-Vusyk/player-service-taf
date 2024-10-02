@@ -22,15 +22,15 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
 
-    @Description("Editor is able to GET Player by id")
+    @Description("Verify that Editor is able to GET Player by id")
     @Severity(SeverityLevel.CRITICAL)
     @TmsLink("PS-311")
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void verifyThatUserCanRetrievePlayerById(String role) {
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    public void verifyThatUserCanRetrievePlayerById(String editor) {
 
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var expectedPlayerId = this.playerControllerEndpoint.createPlayer(role, expectedPlayer)
+        var expectedPlayerId = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer)
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(PlayerCreateResponseDTO.class)

@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 @Story("API consumer is able to get Player")
 public class GetPlayerByIdNegativeTests extends PlayerServiceTestSpec {
 
-    @Description("Player controller api returns NOT_FOUND when GET operation is performed on non existent player")
+    @Description("Verify that player controller api returns NOT_FOUND when GET operation is performed on non existent player")
     @Severity(SeverityLevel.NORMAL)
     @Issue("PS-12347") //Issue id for "Status code 200 in get by id response for nonexistent Player"
     @TmsLink("PS-318")

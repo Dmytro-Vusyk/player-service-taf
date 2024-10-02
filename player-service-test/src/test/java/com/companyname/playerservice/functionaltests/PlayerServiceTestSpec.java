@@ -13,8 +13,8 @@ public class PlayerServiceTestSpec extends BaseTestSpec {
 
     protected PlayerControllerEndpoint playerControllerEndpoint;
 
-    @DataProvider(name = "roleProvider")
-    public Object[][] roleProvider() {
+    @DataProvider(name = "editorProvider")
+    public Object[][] editorProvider() {
         return new Object[][]{
                 {PlayerEditors.SUPERVISOR.getValue()},
                 {PlayerEditors.ADMIN.getValue()}

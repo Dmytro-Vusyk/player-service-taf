@@ -27,7 +27,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
     @Severity(SeverityLevel.CRITICAL)
     @TmsLink("PS-322")
     @Tags(@Tag(TestGroups.SMOKE))
-    @Test(dataProvider = "roleProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
+    @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testUpdatePlayer(String editor) {
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var createdPlayer = this.playerControllerEndpoint.createPlayer(editor, defaultPlayer)

@@ -14,7 +14,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 @Story("API consumer is able to get all Players")
 public class GetAllPlayersTests extends PlayerServiceTestSpec {
 
-    @Description("GET All players call returns data as expected")
+    @Description("Verify that GET All players call returns data as expected")
     @Severity(SeverityLevel.CRITICAL)
     @Issue("PS-12350") //Issue: "Role is missing in response for get all players request"
     @TmsLink("PS-320")
