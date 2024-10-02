@@ -4,7 +4,7 @@
 <suite name="ParallelTestSuite" parallel="methods" thread-count="3">
     <test name="ParallelTest">
         <packages>
-            <package name="com.companyname.playerservice.functionaltests" />
+            <package name="com.companyname.playerservice.functionaltests.*" />
         </packages>
     </test>
 </suite>
