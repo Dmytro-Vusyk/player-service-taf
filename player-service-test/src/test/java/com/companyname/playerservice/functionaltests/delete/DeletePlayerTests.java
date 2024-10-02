@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 
 @Feature("Delete Player")
 @Story("Admin or Supervisor is able to delete Player")
-public class DeletePlayerTest extends PlayerServiceTestSpec {
+public class DeletePlayerTests extends PlayerServiceTestSpec {
 
     @Description("User with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)

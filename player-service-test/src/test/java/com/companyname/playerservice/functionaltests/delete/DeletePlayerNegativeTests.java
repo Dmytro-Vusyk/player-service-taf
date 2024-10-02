@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 @Feature("Delete Player")
 @Story("Admin or Supervisor is able to delete Player")
-public class DeletePlayerNegativeTest extends PlayerServiceTestSpec {
+public class DeletePlayerNegativeTests extends PlayerServiceTestSpec {
 
     @Description("Player controller api returns NOT_FOUND when DELETE operation is performed on non existent user")
     @Severity(SeverityLevel.NORMAL)

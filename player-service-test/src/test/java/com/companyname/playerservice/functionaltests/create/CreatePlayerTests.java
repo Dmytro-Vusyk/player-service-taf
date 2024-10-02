@@ -16,7 +16,7 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 //TODO:fix this annotations
 @Feature("Create Player")
 @Story("Admin or Supervisor is able to create Player")
-public class CreatePlayerTest extends PlayerServiceTestSpec {
+public class CreatePlayerTests extends PlayerServiceTestSpec {
 
     private static Long createdPlayerId;
 

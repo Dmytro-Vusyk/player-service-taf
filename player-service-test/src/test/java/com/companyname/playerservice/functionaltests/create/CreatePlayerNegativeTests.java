@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 @Feature("Create Player")
 @Story("Admin or Supervisor is able to create Player")
-public class CreatePlayerNegativeTest extends PlayerServiceTestSpec {
+public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
 
     @Description("Invalid editor is not able to CREATE a Player")
     @Severity(SeverityLevel.NORMAL)
