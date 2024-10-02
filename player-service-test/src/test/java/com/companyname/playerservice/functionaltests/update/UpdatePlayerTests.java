@@ -12,12 +12,9 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @Feature("Update Player")
 @Story("API consumer is able to update Player")
@@ -40,8 +37,8 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
         createdPlayerId = createdPlayer.getId();
 
-        var expectedAge = 22;
-        var expectedGender = "mechanic";
+        var expectedAge = this.faker.getRandomInt(20, 60);
+        var expectedGender = this.faker.ancient().god();
 
         var playerToUpdate = PlayerUpdateRequestDTO.builder()
                 .age(expectedAge)
@@ -62,13 +59,15 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
                 .body()
                 .as(PlayerGetByPlayerIdResponseDTO.class);
 
-        SoftAssertions.assertSoftly(assertions -> {
-            assertions.assertThat(actualPlayer.getAge())
-                    .as("Verify that age is changed")
-                    .isEqualTo(expectedAge);
-            assertions.assertThat(actualPlayer.getGender())
-                    .as("Verify that gender is changed")
-                    .isEqualTo(expectedGender);
+        Allure.step("Verify that fields are changed", () -> {
+            SoftAssertions.assertSoftly(assertions -> {
+                assertions.assertThat(actualPlayer.getAge())
+                        .as("Verify that age is changed")
+                        .isEqualTo(expectedAge);
+                assertions.assertThat(actualPlayer.getGender())
+                        .as("Verify that gender is changed")
+                        .isEqualTo(expectedGender);
+            });
         });
     }
 

@@ -12,7 +12,7 @@ public class TestAssertions extends Assertions {
         // private constructor to prevent instantiation
     }
 
-    @Step("Assert HTTP Status code is: {expectedStatusCode}")
+    @Step("Assert response HTTP Status code is: {expectedStatusCode}")
     public static void assertStatusCodeIs(ValidatableResponse response, int expectedStatusCode){
         assertThat(response.extract().statusCode())
                 .as("Verify status code is " + expectedStatusCode)

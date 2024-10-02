@@ -22,7 +22,7 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     @Test(groups = {TestGroups.NEGATIVE, TestGroups.BVT})
     public void testInvalidEditorCanNotCreatePlayer() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var role = "GOD";
+        var role = this.faker.getRandomString(10);
         var response = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_FORBIDDEN);
     }
@@ -33,11 +33,10 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     @TmsLink("PS-324")
     @Tags(@Tag(TestGroups.BUG))
     @Test(groups = {TestGroups.BUG, TestGroups.REG})
-    public void testEditorCanCreatePlayerOlderThan(){
+    public void testEditorCanCreatePlayerOlderThan() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        expectedPlayer.setAge("61");
-        var response = this.playerControllerEndpoint
-                .createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
+        expectedPlayer.setAge(String.valueOf(this.faker.getRandomInt(61, 100)));
+        var response = this.playerControllerEndpoint.createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_OK);
     }
 }

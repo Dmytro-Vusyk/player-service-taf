@@ -43,14 +43,16 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
         var actualPlayer = playerByIdResponse.extract().body().as(PlayerGetByPlayerIdResponseDTO.class);
 
-        SoftAssertions.assertSoftly(assertions -> {
-            assertions.assertThat(actualPlayer.getAge().toString()).isEqualTo(expectedPlayer.getAge());
-            assertions.assertThat(actualPlayer.getGender()).isEqualTo(expectedPlayer.getGender());
-            assertions.assertThat(actualPlayer.getId()).isEqualTo(expectedPlayerId);
-            assertions.assertThat(actualPlayer.getLogin()).isEqualTo(expectedPlayer.getLogin());
-            assertions.assertThat(actualPlayer.getPassword()).isEqualTo(expectedPlayer.getPassword());
-            assertions.assertThat(actualPlayer.getRole()).isEqualTo(expectedPlayer.getRole());
-            assertions.assertThat(actualPlayer.getScreenName()).isEqualTo(expectedPlayer.getScreenName());
+        Allure.step("Verify GET player by id call returns correct player information", () ->{
+            SoftAssertions.assertSoftly(assertions -> {
+                assertions.assertThat(actualPlayer.getAge().toString()).isEqualTo(expectedPlayer.getAge());
+                assertions.assertThat(actualPlayer.getGender()).isEqualTo(expectedPlayer.getGender());
+                assertions.assertThat(actualPlayer.getId()).isEqualTo(expectedPlayerId);
+                assertions.assertThat(actualPlayer.getLogin()).isEqualTo(expectedPlayer.getLogin());
+                assertions.assertThat(actualPlayer.getPassword()).isEqualTo(expectedPlayer.getPassword());
+                assertions.assertThat(actualPlayer.getRole()).isEqualTo(expectedPlayer.getRole());
+                assertions.assertThat(actualPlayer.getScreenName()).isEqualTo(expectedPlayer.getScreenName());
+            });
         });
     }
 
