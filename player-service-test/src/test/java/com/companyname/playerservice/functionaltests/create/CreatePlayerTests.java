@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 @Story("Admin or Supervisor is able to create Player")
 public class CreatePlayerTests extends PlayerServiceTestSpec {
 
-    private static Long createdPlayerId;
+    private ThreadLocal<Long> createdPlayerId = new ThreadLocal<>();
 
     @Description("Verify that user with different roles are able to CREATE Players")
     @Severity(SeverityLevel.CRITICAL)
@@ -30,9 +30,10 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
-        createdPlayerId = actualResponse.extract()
+        var id = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
+        createdPlayerId.set(id);
         TestAssertions.assertResponseMatchesJsonSchema(actualResponse, SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA);
     }
 
@@ -46,15 +47,16 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
         var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
-        createdPlayerId = actualResponse.extract()
+        var id = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
+        createdPlayerId.set(id);
         TestAssertions.assertResponseMatchesJsonSchema(actualResponse, SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA);
     }
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId)
+        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

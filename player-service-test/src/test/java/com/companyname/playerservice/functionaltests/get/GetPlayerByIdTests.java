@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @Story("API consumer is able to get Player")
 public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
-    private static Long createdPlayerId;
+    private ThreadLocal<Long> createdPlayerId = new ThreadLocal<>();
 
     @Description("Verify that Editor is able to GET Player by id")
     @Severity(SeverityLevel.CRITICAL)
@@ -35,7 +35,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
 
-        createdPlayerId = expectedPlayerId;
+        createdPlayerId.set(expectedPlayerId);
 
         var playerByIdResponse = this.playerControllerEndpoint.getPlayerById(expectedPlayerId);
         TestAssertions.assertStatusCodeIs(playerByIdResponse, HttpStatus.SC_OK);
@@ -58,7 +58,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId)
+        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

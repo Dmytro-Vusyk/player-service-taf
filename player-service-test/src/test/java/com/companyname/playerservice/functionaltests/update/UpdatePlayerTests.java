@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 @Story("API consumer is able to update Player")
 public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
-    private static Long createdPlayerId;
+    private ThreadLocal<Long> createdPlayerId = new ThreadLocal<>();
 
     @Description("Verify that editor is able to UPDATE Player")
     @Severity(SeverityLevel.CRITICAL)
@@ -35,7 +35,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
                 .body()
                 .as(PlayerCreateResponseDTO.class);
 
-        createdPlayerId = createdPlayer.getId();
+        createdPlayerId.set(createdPlayer.getId());
 
         var expectedAge = this.faker.getRandomInt(20, 60);
         var expectedGender = this.faker.ancient().god();
@@ -73,7 +73,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId)
+        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }
