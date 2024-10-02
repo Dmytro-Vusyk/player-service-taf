@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.update;
 
+import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
@@ -33,7 +34,9 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var createdPlayer = this.playerControllerEndpoint.createPlayer(editor, defaultPlayer)
                 .statusCode(HttpStatus.SC_OK)
-                .extract().body().as(PlayerCreateResponseDTO.class);
+                .extract()
+                .body()
+                .as(PlayerCreateResponseDTO.class);
 
         createdPlayerId = createdPlayer.getId();
 
@@ -50,12 +53,8 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
                 .build();
 
         var playerUpdateResponse = this.playerControllerEndpoint.updatePlayer(editor, createdPlayer.getId(), playerToUpdate);
-
-        Assertions.assertThat(playerUpdateResponse.extract().statusCode())
-                .as("Verify Status Code is 200")
-                .isEqualTo(HttpStatus.SC_OK);
-        playerUpdateResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath(SchemaPath.UPDATE_PLAYER_RESPONSE_SCHEMA));
+        TestAssertions.assertStatusCodeIs(playerUpdateResponse, HttpStatus.SC_OK);
+        TestAssertions.assertResponseMatchesJsonSchema(playerUpdateResponse, SchemaPath.UPDATE_PLAYER_RESPONSE_SCHEMA);
 
         var actualPlayer = this.playerControllerEndpoint.getPlayerById(createdPlayer.getId())
                 .statusCode(HttpStatus.SC_OK)

@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.get;
 
+import com.companyname.assertions.TestAssertions;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.TestGroups;
 import com.companyname.utils.Faker;
@@ -21,7 +22,7 @@ public class GetPlayerByIdNegativeTests extends PlayerServiceTestSpec {
     @Test(groups = {TestGroups.NEGATIVE, TestGroups.REG})
     public void testGetNonExistentPlayerById() {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        this.playerControllerEndpoint.getPlayerById(randomPlayerId)
-                .statusCode(HttpStatus.SC_NOT_FOUND);
+        var response = this.playerControllerEndpoint.getPlayerById(randomPlayerId);
+        TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }

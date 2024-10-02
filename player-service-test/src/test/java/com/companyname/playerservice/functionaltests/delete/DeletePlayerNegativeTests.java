@@ -1,7 +1,8 @@
 package com.companyname.playerservice.functionaltests.delete;
 
-import com.companyname.testutils.TestGroups;
+import com.companyname.assertions.TestAssertions;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.TestGroups;
 import com.companyname.utils.Faker;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
@@ -20,7 +21,7 @@ public class DeletePlayerNegativeTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
     public void testDeletePlayerByInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        this.playerControllerEndpoint.deletePlayer(editor, randomPlayerId)
-                .statusCode(HttpStatus.SC_NOT_FOUND);
+        var response = this.playerControllerEndpoint.deletePlayer(editor, randomPlayerId);
+        TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }

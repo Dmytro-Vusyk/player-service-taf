@@ -1,18 +1,17 @@
 package com.companyname.playerservice.functionaltests.create;
 
-import com.companyname.testutils.SchemaPath;
-import com.companyname.testutils.TestGroups;
+import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.SchemaPath;
+import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @Feature("Create Player")
 @Story("Admin or Supervisor is able to create Player")
@@ -30,12 +29,11 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     public void testPlayerWithAllFieldsCanBeCreated(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
-        actualResponse.statusCode(HttpStatus.SC_OK);
+        TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         createdPlayerId = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
-        actualResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath(SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA));
+        TestAssertions.assertResponseMatchesJsonSchema(actualResponse, SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA);
     }
 
     @Description("Verify That user with different roles are able to CREATE Player with required fields only")
@@ -47,12 +45,11 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     public void testPlayerCanBeCreatedWithRequiredFieldsOnly(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
         var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
-        actualResponse.statusCode(HttpStatus.SC_OK);
+        TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         createdPlayerId = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
-        actualResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath(SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA));
+        TestAssertions.assertResponseMatchesJsonSchema(actualResponse, SchemaPath.CREATE_PLAYER_RESPONSE_SCHEMA);
     }
 
     @AfterMethod()

@@ -1,9 +1,10 @@
 package com.companyname.playerservice.functionaltests.create;
 
-import com.companyname.testutils.TestGroups;
+import com.companyname.assertions.TestAssertions;
 import com.companyname.enums.PlayerEditors;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
@@ -22,9 +23,8 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     public void testInvalidEditorCanNotCreatePlayer() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var role = "GOD";
-        this.playerControllerEndpoint
-                .createPlayer(role, expectedPlayer)
-                .statusCode(HttpStatus.SC_FORBIDDEN);
+        var response = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_FORBIDDEN);
     }
 
     @Description("Verify that Player older than 60 years can be created")
@@ -36,8 +36,8 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     public void testEditorCanCreatePlayerOlderThan(){
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         expectedPlayer.setAge("61");
-        this.playerControllerEndpoint
-                .createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer)
-                .statusCode(HttpStatus.SC_OK);
+        var response = this.playerControllerEndpoint
+                .createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
+        TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_OK);
     }
 }

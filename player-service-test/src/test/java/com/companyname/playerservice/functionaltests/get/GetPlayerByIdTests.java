@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.get;
 
+import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
@@ -10,12 +11,9 @@ import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @Feature("Get Player")
 @Story("API consumer is able to get Player")
@@ -40,11 +38,8 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
         createdPlayerId = expectedPlayerId;
 
         var playerByIdResponse = this.playerControllerEndpoint.getPlayerById(expectedPlayerId);
-        Assertions.assertThat(playerByIdResponse.extract().statusCode())
-                .as("Verify that API responded with status code 200")
-                .isEqualTo(HttpStatus.SC_OK);
-        playerByIdResponse.assertThat()
-                .body(matchesJsonSchemaInClasspath(SchemaPath.GET_PLAYER_BY_ID_RESPONSE_SCHEMA));
+        TestAssertions.assertStatusCodeIs(playerByIdResponse, HttpStatus.SC_OK);
+        TestAssertions.assertResponseMatchesJsonSchema(playerByIdResponse, SchemaPath.GET_PLAYER_BY_ID_RESPONSE_SCHEMA);
 
         var actualPlayer = playerByIdResponse.extract().body().as(PlayerGetByPlayerIdResponseDTO.class);
 

@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.update;
 
+import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
@@ -33,7 +34,7 @@ public class UpdatePlayerNegativeTests extends PlayerServiceTestSpec {
                 .screenName(defaultPlayer.getScreenName())
                 .build();
 
-        this.playerControllerEndpoint.updatePlayer(editor, randomPlayerId, playerToUpdate)
-                .statusCode(HttpStatus.SC_NOT_FOUND);
+        var response = this.playerControllerEndpoint.updatePlayer(editor, randomPlayerId, playerToUpdate);
+        TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }

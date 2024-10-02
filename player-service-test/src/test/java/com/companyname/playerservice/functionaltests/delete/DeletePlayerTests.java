@@ -1,5 +1,6 @@
 package com.companyname.playerservice.functionaltests.delete;
 
+import com.companyname.assertions.TestAssertions;
 import com.companyname.testutils.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
@@ -34,12 +35,12 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
         var deleteResponse = this.playerControllerEndpoint.deletePlayer(editor, actualPlayerId);
 
         SoftAssertions.assertSoftly(assertions -> {
-            assertions.assertThat(deleteResponse.extract().statusCode())
-                    .as("Verify that status code is 204 NO_CONTENT")
-                    .isEqualTo(HttpStatus.SC_NO_CONTENT);
-            assertions.assertThat(deleteResponse.extract().response().getBody().asString())
-                    .as("Verify that body is null")
-                    .isEmpty();
+            TestAssertions.assertStatusCodeIs(deleteResponse,HttpStatus.SC_NO_CONTENT);
+            Allure.step("Verify that body is null", () ->{
+                assertions.assertThat(deleteResponse.extract().response().getBody().asString())
+                        .as("Verify that body is null")
+                        .isEmpty();
+            });
         });
 
         var actualPlayers = this.playerControllerEndpoint.getAllPlayers()
