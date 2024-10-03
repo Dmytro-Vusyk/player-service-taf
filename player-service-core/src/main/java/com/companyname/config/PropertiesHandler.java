@@ -89,21 +89,6 @@ public class PropertiesHandler {
         setEnvProperties(properties);
     }
 
-    private File getConfigFileFromResources(String path) {
-        var res = getClass().getClassLoader().getResource(path);
-        File file = null;
-        if (res != null) {
-            try {
-                file = new File(res.toURI());
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            //TODO: add exception here
-        }
-        return file;
-    }
-
     private void loadSystemPropertiesForProject(){
         logger.info("Setting project properties as system properties");
         var props = new Properties();
