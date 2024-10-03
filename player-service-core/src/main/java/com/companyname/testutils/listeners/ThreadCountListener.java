@@ -14,7 +14,7 @@ public class ThreadCountListener implements ITestListener {
     public void onStart(ITestContext context) {
         var threadProperty = (String) PropertiesHandler.getInstance()
                 .getProjectProperties()
-                .get("treadcount");
+                .get("threadcount");
         int threadCount = Integer.parseInt(threadProperty);
         logger.debug("setting thread count:" + threadCount);
         context.getSuite().getXmlSuite().setParallel(XmlSuite.ParallelMode.METHODS);
