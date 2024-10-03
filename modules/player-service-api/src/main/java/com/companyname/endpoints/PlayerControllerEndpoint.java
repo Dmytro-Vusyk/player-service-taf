@@ -8,6 +8,7 @@ import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
@@ -21,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PlayerControllerEndpoint {
     private static final Logger logger = LoggerFactory.getLogger(PlayerControllerEndpoint.class);
-    private final String baseUrl;
     private final String CREATE_PLAYER_URL = "/player/create/%s";
     private final String DELETE_PLAYER_URL = "/player/delete/%s";
     private final String GET_PLAYER_URL = "/player/get";
@@ -37,8 +37,7 @@ public class PlayerControllerEndpoint {
      */
     public PlayerControllerEndpoint(String baseUrl) {
         logger.info("Constructing Endpoint using base url: {}", baseUrl);
-        this.baseUrl = baseUrl;
-        constructRequestSpec();
+        constructRequestSpec(baseUrl);
     }
 
     /**
@@ -108,7 +107,8 @@ public class PlayerControllerEndpoint {
     public ValidatableResponse getAllPlayers() {
         logger.debug("Executing GET player request to GET all players");
         return RestAssured
-                .given(this.requestSpecification)
+                .given()
+                .spec(this.requestSpecification)
                 .when()
                 .get(GET_ALL_PLAYERS_URL)
                 .then();
@@ -134,13 +134,13 @@ public class PlayerControllerEndpoint {
                 .then();
     }
 
-    private void constructRequestSpec() {
+    private void constructRequestSpec(String baseUrl) {
         logger.debug("Set up request specification");
         this.requestSpecification = new RequestSpecBuilder()
-                .setBaseUri(this.baseUrl)
+                .setBaseUri(baseUrl)
                 .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+//                .addFilter(new ResponseLoggingFilter())
                 .setContentType(ContentType.JSON)
                 .build();
     }
