@@ -25,7 +25,7 @@
         <aspectj.version>1.9.22.1</aspectj.version>
         <surfire.plugin.version>3.5.0</surfire.plugin.version>
         <restassured.version>5.5.0</restassured.version>
-        <hamcrest.version>3.0</hamcrest.version>
+        <hamcrest.version>2.2</hamcrest.version>
         <lombock.version>1.18.34</lombock.version>
         <jackson.version>2.17.2</jackson.version>
         <faker.version>1.0.2</faker.version>
@@ -43,6 +43,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured-bom</artifactId>
+                <version>${restassured.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -50,11 +57,12 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
