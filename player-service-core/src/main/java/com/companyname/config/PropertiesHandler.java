@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +16,7 @@ import java.util.Properties;
 public class PropertiesHandler {
     private final Logger logger = LoggerFactory.getLogger(PropertiesHandler.class);
     private static final String PROJECT_PROPERTIES_NAME = "project.properties";
-    private static final String CONFIG_FOLDER_PATH = "config";
+    private static final String CONFIG_FOLDER_PATH = "/config";
     private static final String ENV_FOLDER_PATH = "env";
     private static final String ENV_PROPERTIES_NAME = "environment.properties";
     private static PropertiesHandler instance;
@@ -54,9 +55,10 @@ public class PropertiesHandler {
     private Properties getProperties(String path) {
         logger.info("Get properties from path: {}", path);
         Properties properties = new Properties();
-        try (FileInputStream stream = new FileInputStream(getConfigFileFromResources(path))) {
+        try (InputStream stream = getClass().getResourceAsStream(path)) {
             properties.load(stream);
         } catch (IOException e) {
+            logger.error("Failed to load properties: { }", e);
             e.printStackTrace();
         }
         return properties;
