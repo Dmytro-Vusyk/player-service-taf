@@ -122,21 +122,14 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-                    <!--    This block is just to showcase the usage of profiles above-->
-
-                    <!--                    <systemPropertyVariables>-->
-                    <!--                        <env>${env}</env>-->
-                    <!--                        <loglevel>${loglevel}</loglevel>-->
-                    <!--                        <threadcount>${threadcount}</threadcount>-->
-                    <!--                        <disable.junit.reporter>true</disable.junit.reporter>-->
-                    <!--                    </systemPropertyVariables>-->
-                    <properties>
-                        <property>
-                            <name>junit</name>
-                            <value>false</value>
-                        </property>
-                    </properties>
+                    <systemPropertiesFile>
+                        ${project.parent.basedir}/player-service-core/src/main/resources/config/project.properties
+                    </systemPropertiesFile>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                    <!--    This block is just to showcase the usage of profiles above-->
+                    <!--                        <env>${env}</env>-->
+                    <!--                        <logLevel>${loglevel}</logLevel>-->
+                    <!--                        <threadcount>${threadcount}</threadcount>-->
                 </configuration>
                 <dependencies>
                     <dependency>

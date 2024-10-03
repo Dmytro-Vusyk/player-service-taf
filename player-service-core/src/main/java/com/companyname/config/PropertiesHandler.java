@@ -4,6 +4,7 @@ import com.companyname.enums.Environments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,7 +20,6 @@ public class PropertiesHandler {
     private PropertiesHandler() {
         loadProjectProperties();
         loadEnvProperties();
-        loadSystemPropertiesForProject();
     }
 
     public Properties getProjectProperties() {
@@ -48,14 +48,14 @@ public class PropertiesHandler {
     private Properties getProperties(String path) {
         logger.info("Get properties from path: {}", path);
         Properties properties = new Properties();
-        try (InputStream stream = this.getClass().getClassLoader().getResourceAsStream(path)) {
-            if (stream != null) {
-                properties.load(stream);
-            } else {
-                logger.error("Failed to load properties. stream is null");
+
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path)) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("Properties file not found at " + path);
             }
+            properties.load(inputStream);
         } catch (IOException e) {
-            logger.error("Failed to load properties caused by Error: { }", e);
+            throw new RuntimeException(e);
         }
         return properties;
     }
@@ -81,16 +81,4 @@ public class PropertiesHandler {
         var properties = getProperties(String.format(CONFIG_ENVIRONMENT_PROPERTIES, folderName));
         setEnvProperties(properties);
     }
-
-    private void loadSystemPropertiesForProject() {
-        logger.info("Setting project properties as system properties");
-        var props = new Properties();
-        logger.info("Setting project properties: {}", getProjectProperties());
-        props.putAll(getProjectProperties());
-        logger.info("Setting environment properties: {}", getEnvProperties());
-        props.putAll(getEnvProperties());
-        System.setProperties(props);
-        logger.info("list of loaded system properties:\n" + System.getProperties());
-    }
-
 }
