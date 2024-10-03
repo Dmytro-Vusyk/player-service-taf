@@ -73,35 +73,36 @@
         </dependency>
     </dependencies>
 
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            <id>dev</id>-->
-<!--            <properties>-->
-<!--                <env>dev</env>-->
-<!--                <loglevel>DEBUG</loglevel>-->
-<!--                <threadcount>3</threadcount>-->
-<!--            </properties>-->
-<!--            <activation>-->
-<!--                <activeByDefault>true</activeByDefault>-->
-<!--            </activation>-->
-<!--        </profile>-->
-<!--        <profile>-->
-<!--            <id>int</id>-->
-<!--            <properties>-->
-<!--                <env>int</env>-->
-<!--                <loglevel>INFO</loglevel>-->
-<!--                <threadcount>2</threadcount>-->
-<!--            </properties>-->
-<!--        </profile>-->
-<!--        <profile>-->
-<!--            <id>qa</id>-->
-<!--            <properties>-->
-<!--                <env>qa</env>-->
-<!--                <loglevel>ERROR</loglevel>-->
-<!--                <threadcount>5</threadcount>-->
-<!--            </properties>-->
-<!--        </profile>-->
-<!--    </profiles>-->
+    <!--    This block is just to showcase the usage of profiles-->
+    <!--    <profiles>-->
+    <!--        <profile>-->
+    <!--            <id>dev</id>-->
+    <!--            <properties>-->
+    <!--                <env>dev</env>-->
+    <!--                <loglevel>DEBUG</loglevel>-->
+    <!--                <threadcount>3</threadcount>-->
+    <!--            </properties>-->
+    <!--            <activation>-->
+    <!--                <activeByDefault>true</activeByDefault>-->
+    <!--            </activation>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>int</id>-->
+    <!--            <properties>-->
+    <!--                <env>int</env>-->
+    <!--                <loglevel>INFO</loglevel>-->
+    <!--                <threadcount>2</threadcount>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>qa</id>-->
+    <!--            <properties>-->
+    <!--                <env>qa</env>-->
+    <!--                <loglevel>ERROR</loglevel>-->
+    <!--                <threadcount>5</threadcount>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--    </profiles>-->
 
     <build>
         <plugins>
@@ -121,12 +122,14 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-                    <systemPropertyVariables>
-<!--                        <env>${env}</env>-->
-<!--                        <loglevel>${loglevel}</loglevel>-->
-<!--                        <threadcount>${threadcount}</threadcount>-->
-<!--                        <disable.junit.reporter>true</disable.junit.reporter>-->
-                    </systemPropertyVariables>
+                    <!--    This block is just to showcase the usage of profiles above-->
+
+                    <!--                    <systemPropertyVariables>-->
+                    <!--                        <env>${env}</env>-->
+                    <!--                        <loglevel>${loglevel}</loglevel>-->
+                    <!--                        <threadcount>${threadcount}</threadcount>-->
+                    <!--                        <disable.junit.reporter>true</disable.junit.reporter>-->
+                    <!--                    </systemPropertyVariables>-->
                     <properties>
                         <property>
                             <name>junit</name>
