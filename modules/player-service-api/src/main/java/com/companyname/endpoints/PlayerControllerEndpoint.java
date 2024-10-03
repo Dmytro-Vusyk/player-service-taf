@@ -140,7 +140,7 @@ public class PlayerControllerEndpoint {
                 .setBaseUri(baseUrl)
                 .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
-//                .addFilter(new ResponseLoggingFilter())
+                .addFilter(new ResponseLoggingFilter())
                 .setContentType(ContentType.JSON)
                 .build();
     }

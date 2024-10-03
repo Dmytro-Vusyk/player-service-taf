@@ -9,14 +9,14 @@ import org.slf4j.LoggerFactory;
 public class PlayerServiceAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerServiceAPI.class);
-    private final String baseUrl;
+//    private final String baseUrl;
     private static PlayerServiceAPI playerServiceAPI;
     private final static ThreadLocal<PlayerControllerEndpoint> playerControllerEndpoint = new ThreadLocal<>();
 
     private PlayerServiceAPI() {
         logger.debug("Constructing Player Service API");
         // this config should be moved to BaseAPI class(class should be created on commercial framework.)
-        this.baseUrl = PropertiesHandler.getInstance().getEnvProperties().getProperty("player.service.host");
+//        this.baseUrl = PropertiesHandler.getInstance().getEnvProperties().getProperty("player.service.host");
         initUnversionedEndpoints();
     }
 
@@ -28,7 +28,7 @@ public class PlayerServiceAPI {
     }
 
     private void initUnversionedEndpoints() {
-        playerControllerEndpoint.set(new PlayerControllerEndpoint(baseUrl));
+        playerControllerEndpoint.set(new PlayerControllerEndpoint("http://3.68.165.45"));
     }
 
     public PlayerControllerEndpoint getPlayerControllerEndpoint() {

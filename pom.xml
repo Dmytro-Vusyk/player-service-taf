@@ -23,14 +23,14 @@
         <allure.version>2.24.0</allure.version>
         <allure.maven.plugin.version>2.14.0</allure.maven.plugin.version>
         <aspectj.version>1.9.22.1</aspectj.version>
-        <surfire.plugin.version>3.5.0</surfire.plugin.version>
+        <surfire.plugin.version>2.19.1</surfire.plugin.version>
         <restassured.version>5.1.1</restassured.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombock.version>1.18.34</lombock.version>
         <jackson.version>2.17.2</jackson.version>
         <faker.version>1.0.2</faker.version>
         <logback.version>1.5.8</logback.version>
-        <testng.version>7.10.2</testng.version>
+        <testng.version>6.14.3</testng.version>
         <slf4j.version>2.0.16</slf4j.version>
     </properties>
 

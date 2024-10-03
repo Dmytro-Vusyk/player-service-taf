@@ -73,35 +73,35 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <env>dev</env>
-                <loglevel>DEBUG</loglevel>
-                <threadcount>3</threadcount>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>int</id>
-            <properties>
-                <env>int</env>
-                <loglevel>INFO</loglevel>
-                <threadcount>2</threadcount>
-            </properties>
-        </profile>
-        <profile>
-            <id>qa</id>
-            <properties>
-                <env>qa</env>
-                <loglevel>ERROR</loglevel>
-                <threadcount>5</threadcount>
-            </properties>
-        </profile>
-    </profiles>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>dev</id>-->
+<!--            <properties>-->
+<!--                <env>dev</env>-->
+<!--                <loglevel>DEBUG</loglevel>-->
+<!--                <threadcount>3</threadcount>-->
+<!--            </properties>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>int</id>-->
+<!--            <properties>-->
+<!--                <env>int</env>-->
+<!--                <loglevel>INFO</loglevel>-->
+<!--                <threadcount>2</threadcount>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>qa</id>-->
+<!--            <properties>-->
+<!--                <env>qa</env>-->
+<!--                <loglevel>ERROR</loglevel>-->
+<!--                <threadcount>5</threadcount>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 
     <build>
         <plugins>
@@ -122,10 +122,18 @@
                         <include>**/*Tests.java</include>
                     </includes>
                     <systemPropertyVariables>
-                        <env>${env}</env>
-                        <loglevel>${loglevel}</loglevel>
-                        <threadcount>${threadcount}</threadcount>
+<!--                        <env>${env}</env>-->
+<!--                        <loglevel>${loglevel}</loglevel>-->
+<!--                        <threadcount>${threadcount}</threadcount>-->
+<!--                        <disable.junit.reporter>true</disable.junit.reporter>-->
                     </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>junit</name>
+                            <value>false</value>
+                        </property>
+                    </properties>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
                 <dependencies>
                     <dependency>

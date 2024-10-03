@@ -15,7 +15,7 @@ public class PlayerServiceTestSpec extends BaseTestSpec {
     protected PlayerControllerEndpoint playerControllerEndpoint;
     protected Faker faker;
 
-    @DataProvider(name = "editorProvider", parallel = true)
+    @DataProvider(name = "editorProvider")
     public Object[][] editorProvider() {
         return new Object[][]{
                 {PlayerEditors.SUPERVISOR.getValue()},

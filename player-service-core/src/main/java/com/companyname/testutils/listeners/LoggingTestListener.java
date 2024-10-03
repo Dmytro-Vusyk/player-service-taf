@@ -2,6 +2,7 @@ package com.companyname.testutils.listeners;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
@@ -31,5 +32,20 @@ public class LoggingTestListener implements ITestListener {
     public void onTestSkipped(ITestResult result) {
         String testName = result.getMethod().getMethodName();
         logger.warn("SKIPPED: TestName = {}", testName);
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onStart(ITestContext iTestContext) {
+
+    }
+
+    @Override
+    public void onFinish(ITestContext iTestContext) {
+
     }
 }
