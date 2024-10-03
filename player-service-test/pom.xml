@@ -35,7 +35,7 @@
             <groupId>com.companyname</groupId>
             <artifactId>player-service-core</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
@@ -118,9 +118,9 @@
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${suiteXml}</suiteXmlFile>
-                    </suiteXmlFiles>
+                    <includes>
+                        <include>**/*Tests.java</include>
+                    </includes>
                     <systemPropertyVariables>
                         <env>${env}</env>
                         <loglevel>${loglevel}</loglevel>
@@ -132,6 +132,11 @@
                         <groupId>org.aspectj</groupId>
                         <artifactId>aspectjweaver</artifactId>
                         <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>${surfire.plugin.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

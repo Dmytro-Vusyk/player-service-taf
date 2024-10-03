@@ -6,16 +6,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public class PropertiesHandler {
-    private final Logger logger = LoggerFactory.getLogger(PropertiesHandler.class);
-    private static final String PROJECT_PROPERTIES_NAME = "project.properties";
-    private static final String CONFIG_FOLDER_PATH = "config";
-    private static final String ENV_FOLDER_PATH = "env";
-    private static final String ENV_PROPERTIES_NAME = "environment.properties";
+    private static final Logger logger = LoggerFactory.getLogger(PropertiesHandler.class);
+    public static final String CONFIG_ENVIRONMENT_PROPERTIES = "config/env/%s/environment.properties";
+    public static final String CONFIG_PROJECT_PROPERTIES = "config/project.properties";
     private static PropertiesHandler instance;
     private Properties projectProperties;
     private Properties envProperties;
@@ -53,20 +49,19 @@ public class PropertiesHandler {
         logger.info("Get properties from path: {}", path);
         Properties properties = new Properties();
         try (InputStream stream = this.getClass().getClassLoader().getResourceAsStream(path)) {
-            if (stream != null){
+            if (stream != null) {
                 properties.load(stream);
+            } else {
+                logger.error("Failed to load properties. stream is null");
             }
-            logger.error("Failed to load properties. stream is null");
         } catch (IOException e) {
             logger.error("Failed to load properties caused by Error: { }", e);
-            e.printStackTrace();
         }
         return properties;
     }
 
     private void loadProjectProperties() {
-        Path path = Paths.get(CONFIG_FOLDER_PATH, PROJECT_PROPERTIES_NAME);
-        var properties = getProperties(path.toString());
+        var properties = getProperties(CONFIG_PROJECT_PROPERTIES);
         setProjectProperties(properties);
     }
 
@@ -81,17 +76,18 @@ public class PropertiesHandler {
             folderName = Environments.QA.getValue();
         } else {
             folderName = Environments.DEV.getValue();
-            logger.error("No environment {} found. Continue wth default env: {}" , env, Environments.DEV.getValue());
+            logger.error("No environment {} found. Continue wth default env: {}", env, Environments.DEV.getValue());
         }
-        var path = Paths.get(CONFIG_FOLDER_PATH, ENV_FOLDER_PATH, folderName, ENV_PROPERTIES_NAME);
-        var properties = getProperties(path.toString());
+        var properties = getProperties(String.format(CONFIG_ENVIRONMENT_PROPERTIES, folderName));
         setEnvProperties(properties);
     }
 
-    private void loadSystemPropertiesForProject(){
+    private void loadSystemPropertiesForProject() {
         logger.info("Setting project properties as system properties");
         var props = new Properties();
+        logger.info("Setting project properties: {}", getProjectProperties());
         props.putAll(getProjectProperties());
+        logger.info("Setting environment properties: {}", getEnvProperties());
         props.putAll(getEnvProperties());
         System.setProperties(props);
         logger.info("list of loaded system properties:\n" + System.getProperties());
