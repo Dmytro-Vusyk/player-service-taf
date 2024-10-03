@@ -1,3 +1,5 @@
+#I am to lazy to paste this commands each time when debugging project locally.
+
 # Define the targets
 
 # Target to run mvn clean install with skipping tests
