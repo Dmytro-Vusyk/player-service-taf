@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Build and Test
 
 on:
   push:
@@ -30,4 +30,4 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - name: Run tests in player-service-test
-        run: mvn clean test -pl player-service-test
+        run: mvn clean test -pl player-service-test -am
