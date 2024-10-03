@@ -4,11 +4,8 @@ import com.companyname.enums.Environments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -16,7 +13,7 @@ import java.util.Properties;
 public class PropertiesHandler {
     private final Logger logger = LoggerFactory.getLogger(PropertiesHandler.class);
     private static final String PROJECT_PROPERTIES_NAME = "project.properties";
-    private static final String CONFIG_FOLDER_PATH = "/config";
+    private static final String CONFIG_FOLDER_PATH = "config";
     private static final String ENV_FOLDER_PATH = "env";
     private static final String ENV_PROPERTIES_NAME = "environment.properties";
     private static PropertiesHandler instance;
@@ -55,10 +52,13 @@ public class PropertiesHandler {
     private Properties getProperties(String path) {
         logger.info("Get properties from path: {}", path);
         Properties properties = new Properties();
-        try (InputStream stream = getClass().getResourceAsStream(path)) {
-            properties.load(stream);
+        try (InputStream stream = this.getClass().getClassLoader().getResourceAsStream(path)) {
+            if (stream != null){
+                properties.load(stream);
+            }
+            logger.error("Failed to load properties. stream is null");
         } catch (IOException e) {
-            logger.error("Failed to load properties: { }", e);
+            logger.error("Failed to load properties caused by Error: { }", e);
             e.printStackTrace();
         }
         return properties;
@@ -71,8 +71,7 @@ public class PropertiesHandler {
     }
 
     private void loadEnvProperties() {
-        Path projecConfigPath = Paths.get(CONFIG_FOLDER_PATH, PROJECT_PROPERTIES_NAME);
-        var env = getProperties(projecConfigPath.toString()).getProperty("env");
+        var env = getProjectProperties().getProperty("env");
         String folderName;
         if (env.equalsIgnoreCase(Environments.DEV.getValue())) {
             folderName = Environments.DEV.getValue();
