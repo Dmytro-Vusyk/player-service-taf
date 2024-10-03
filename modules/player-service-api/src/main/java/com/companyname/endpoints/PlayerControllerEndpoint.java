@@ -1,5 +1,6 @@
 package com.companyname.endpoints;
 
+import com.companyname.filters.InfoRequestLoggingFilter;
 import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdRequestDTO;
@@ -8,7 +9,6 @@ import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
@@ -16,6 +16,7 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 /**
  * This class describes realization of the type Player controller endpoint.
@@ -135,13 +136,25 @@ public class PlayerControllerEndpoint {
     }
 
     private void constructRequestSpec(String baseUrl) {
+        var level = System.getProperty("loglevel");
         logger.debug("Set up request specification");
-        this.requestSpecification = new RequestSpecBuilder()
-                .setBaseUri(baseUrl)
-                .addFilter(new AllureRestAssured())
-                .addFilter(new RequestLoggingFilter())
-                .addFilter(new ResponseLoggingFilter())
+        var requestSpecBuilder = getRequestFilter(new RequestSpecBuilder(), level);
+        this.requestSpecification = requestSpecBuilder.setBaseUri(baseUrl)
                 .setContentType(ContentType.JSON)
                 .build();
+    }
+
+    private RequestSpecBuilder getRequestFilter(RequestSpecBuilder rs, String level) {
+        logger.debug("Request Filter level: {}", level);
+        if (level.equalsIgnoreCase(Level.INFO.toString()) ||
+                level.equalsIgnoreCase(Level.ERROR.toString()) ||
+                level.equalsIgnoreCase(Level.WARN.toString())) {
+            rs.addFilter(new InfoRequestLoggingFilter());
+        } else {
+            rs.addFilter(new RequestLoggingFilter());
+            rs.addFilter(new ResponseLoggingFilter());
+        }
+        rs.addFilter(new AllureRestAssured());
+        return rs;
     }
 }
