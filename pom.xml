@@ -24,7 +24,7 @@
         <allure.maven.plugin.version>2.14.0</allure.maven.plugin.version>
         <aspectj.version>1.9.22.1</aspectj.version>
         <surfire.plugin.version>3.5.0</surfire.plugin.version>
-        <restassured.version>5.5.0</restassured.version>
+        <restassured.version>5.1.1</restassured.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombock.version>1.18.34</lombock.version>
         <jackson.version>2.17.2</jackson.version>
@@ -43,13 +43,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>io.rest-assured</groupId>
-                <artifactId>rest-assured-bom</artifactId>
-                <version>${restassured.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.rest-assured</groupId>-->
+<!--                <artifactId>rest-assured-bom</artifactId>-->
+<!--                <version>${restassured.version}</version>-->
+<!--                <scope>import</scope>-->
+<!--                <type>pom</type>-->
+<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 
