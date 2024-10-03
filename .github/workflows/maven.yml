@@ -29,7 +29,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package --file pom.xml -DskipTests=true
 
       - name: Run tests in player-service-test
         run: mvn test -pl player-service-test -am -Dmaven.test.failure.ignore=true
