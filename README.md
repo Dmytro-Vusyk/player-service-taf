@@ -10,7 +10,7 @@ Utilization of multimodule capabilities for easy and fast code sharing between r
 ### Packages purpose
 - models - package for sharing of dto and other POJO`s
 - modules - package for different API implementations like REST, SOAP API, DB connectors, etc.
-- player-service-core - core framework features like packages like adaptors, listeners, utils, etc
+- player-service-core - core framework features like adaptors, listeners, utils, etc
 - player-service-test - module to store tests for player-service-api. Ideally should be rebased into separate repository
 ### Schema
 
