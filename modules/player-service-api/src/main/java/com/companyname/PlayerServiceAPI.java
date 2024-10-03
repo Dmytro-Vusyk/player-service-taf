@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 public class PlayerServiceAPI {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerServiceAPI.class);
-    private static PlayerServiceAPI playerServiceAPI;
     private final String baseUrl;
+    private static PlayerServiceAPI playerServiceAPI;
     private final static ThreadLocal<PlayerControllerEndpoint> playerControllerEndpoint = new ThreadLocal<>();
 
     private PlayerServiceAPI() {

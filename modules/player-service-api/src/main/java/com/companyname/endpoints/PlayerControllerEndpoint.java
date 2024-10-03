@@ -137,7 +137,7 @@ public class PlayerControllerEndpoint {
     private void constructRequestSpec() {
         logger.debug("Set up request specification");
         this.requestSpecification = new RequestSpecBuilder()
-                .setBaseUri(baseUrl)
+                .setBaseUri(this.baseUrl)
                 .addFilter(new AllureRestAssured())
                 .addFilter(new RequestLoggingFilter())
                 .addFilter(new ResponseLoggingFilter())

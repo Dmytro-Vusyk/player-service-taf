@@ -1,6 +1,6 @@
 package com.companyname.config;
 
-import com.companyname.enums.Environment;
+import com.companyname.enums.Environments;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,15 +72,15 @@ public class PropertiesHandler {
         Path projecConfigPath = Paths.get(CONFIG_FOLDER_PATH, PROJECT_PROPERTIES_NAME);
         var env = getProperties(projecConfigPath.toString()).getProperty("env");
         String folderName;
-        if (env.equalsIgnoreCase(Environment.DEV.getValue())) {
-            folderName = Environment.DEV.getValue();
-        } else if (env.equalsIgnoreCase(Environment.INT.getValue())) {
-            folderName = Environment.INT.getValue();
-        } else if (env.equalsIgnoreCase(Environment.QA.getValue())) {
-            folderName = Environment.QA.getValue();
+        if (env.equalsIgnoreCase(Environments.DEV.getValue())) {
+            folderName = Environments.DEV.getValue();
+        } else if (env.equalsIgnoreCase(Environments.INT.getValue())) {
+            folderName = Environments.INT.getValue();
+        } else if (env.equalsIgnoreCase(Environments.QA.getValue())) {
+            folderName = Environments.QA.getValue();
         } else {
-            folderName = Environment.DEV.getValue();
-            logger.error("No environment {} found. Continue wth default env: {}" , env, Environment.DEV.getValue());
+            folderName = Environments.DEV.getValue();
+            logger.error("No environment {} found. Continue wth default env: {}" , env, Environments.DEV.getValue());
         }
         var path = Paths.get(CONFIG_FOLDER_PATH, ENV_FOLDER_PATH, folderName, ENV_PROPERTIES_NAME);
         var properties = getProperties(path.toString());
@@ -108,7 +108,7 @@ public class PropertiesHandler {
         props.putAll(getProjectProperties());
         props.putAll(getEnvProperties());
         System.setProperties(props);
-        logger.info("list of loaded system properties:" + "\n" + System.getProperties());
+        logger.info("list of loaded system properties:\n" + System.getProperties());
     }
 
 }

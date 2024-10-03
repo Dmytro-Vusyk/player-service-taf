@@ -1,13 +1,13 @@
 package com.companyname.enums;
 
-public enum Environment {
+public enum Environments {
     DEV("dev"),
     INT("int"),
     QA("qa");
 
     private final String envName;
 
-    Environment(String envName) {
+    Environments(String envName) {
         this.envName = envName;
     }
 
