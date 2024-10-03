@@ -24,7 +24,7 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
     @TmsLink("PS-326") //Test case id in TMS
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
-    public void test(String editor) {
+    public void testDeletePlayerById(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
         var actualPlayerId = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer)
                 .statusCode(HttpStatus.SC_OK)
