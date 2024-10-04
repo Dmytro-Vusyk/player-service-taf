@@ -127,7 +127,7 @@
                     </systemPropertiesFile>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                     <parallel>methods</parallel>
-                    <threadCount>${thread.count}</threadCount>
+                    <threadCount>3</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
