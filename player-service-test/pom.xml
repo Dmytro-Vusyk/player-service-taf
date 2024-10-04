@@ -126,10 +126,8 @@
                         ${project.parent.basedir}/player-service-core/src/main/resources/config/project.properties
                     </systemPropertiesFile>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                    <!--    This block is just to showcase the usage of profiles above-->
-                    <!--                        <env>${env}</env>-->
-                    <!--                        <logLevel>${loglevel}</logLevel>-->
-                    <!--                        <threadcount>${threadcount}</threadcount>-->
+                    <parallel>${thread.parallel}</parallel>
+                    <threadCount>${thread.count}</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
