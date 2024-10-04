@@ -126,7 +126,7 @@
                         ${project.parent.basedir}/player-service-core/src/main/resources/config/project.properties
                     </systemPropertiesFile>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                    <parallel>${thread.parallel}</parallel>
+                    <parallel>methods</parallel>
                     <threadCount>${thread.count}</threadCount>
                 </configuration>
                 <dependencies>

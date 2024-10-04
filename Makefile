@@ -4,12 +4,12 @@
 
 # Target to run mvn clean install with skipping tests
 install:
-	@mvn clean install -DskipTests=true
+	@mvn -B package --file pom.xml -DskipTests=true
 	@echo "Maven clean install complete. Waiting for the next step..."
 
 # Target to run the specific test class after installation
 test:
-	@mvn clean test -pl player-service-test -Dtest=PropertiesTest -Dmaven.test.failure.ignore=true
+	@mvn test -pl player-service-test -am -Dmaven.test.failure.ignore=true
 	@echo "Test execution completed."
 
 # Combined target to first install and then run the test
