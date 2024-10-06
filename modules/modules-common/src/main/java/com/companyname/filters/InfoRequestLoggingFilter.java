@@ -8,7 +8,11 @@ import io.restassured.specification.FilterableResponseSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Optional;
+
 public class InfoRequestLoggingFilter implements Filter {
+
+    private static final Logger logger = LoggerFactory.getLogger(InfoRequestLoggingFilter.class);
 
     /*
      * Normally I would implement similar behavior as in RequestLoggingFilter.
@@ -16,13 +20,26 @@ public class InfoRequestLoggingFilter implements Filter {
      * */
     @Override
     public Response filter(FilterableRequestSpecification requestSpec, FilterableResponseSpecification responseSpec, FilterContext ctx) {
-        System.out.printf("Request Method: %s%n", requestSpec.getMethod());
-        System.out.printf("Request URL: %s%n", requestSpec.getURI());
+        StringBuffer logBuffer = new StringBuffer();
+
+        logBuffer.append(System.lineSeparator())
+                .append("Request Method: ")
+                .append(requestSpec.getMethod())
+                .append(System.lineSeparator())
+                .append("Request URL: ")
+                .append(requestSpec.getURI())
+                .append(System.lineSeparator());
+
         if (requestSpec.getBody() != null) {
-            System.out.printf("Request Body: %s%n", (Object) requestSpec.getBody());
+            logBuffer.append("Request Body: ")
+                    .append(Optional.ofNullable(requestSpec.getBody()))
+                    .append(System.lineSeparator());
         } else {
-            System.out.println("Request Body: [no body]");
+            logBuffer.append("Request Body: [no body]")
+                    .append(System.lineSeparator());
         }
+
+        logger.info(logBuffer.toString());
 
         return ctx.next(requestSpec, responseSpec);
     }
