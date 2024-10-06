@@ -148,8 +148,8 @@ public class PlayerControllerEndpoint {
     private RequestSpecBuilder getRequestFilter(RequestSpecBuilder rs, String level) {
         logger.debug("Request Filter level: {}", level);
         if (level.equalsIgnoreCase(Level.INFO.toString()) ||
-                level.equalsIgnoreCase(Level.ERROR.toString()) ||
-                level.equalsIgnoreCase(Level.WARN.toString())) {
+                level.equalsIgnoreCase(Level.DEBUG.toString()) ||
+                level.equalsIgnoreCase(Level.TRACE.toString())) {
             rs.addFilter(new InfoRequestLoggingFilter());
         } else {
             rs.addFilter(new RequestLoggingFilter());
