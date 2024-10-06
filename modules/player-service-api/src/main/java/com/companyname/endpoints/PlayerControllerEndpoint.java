@@ -1,5 +1,6 @@
 package com.companyname.endpoints;
 
+import com.companyname.config.PropertiesHandler;
 import com.companyname.filters.InfoRequestLoggingFilter;
 import com.companyname.models.playerserviceapi.PlayerCreateRequestDTO;
 import com.companyname.models.playerserviceapi.PlayerDeleteRequestDTO;
@@ -136,7 +137,7 @@ public class PlayerControllerEndpoint {
     }
 
     private void constructRequestSpec(String baseUrl) {
-        var level = System.getProperty("loglevel");
+        var level =  PropertiesHandler.getInstance().getProjectProperties().getProperty("loglevel");
         logger.debug("Set up request specification");
         var requestSpecBuilder = getRequestFilter(new RequestSpecBuilder(), level);
         this.requestSpecification = requestSpecBuilder.setBaseUri(baseUrl)
