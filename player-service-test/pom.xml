@@ -140,14 +140,12 @@
                     <includes>
                         <include>**/*Tests.java</include>
                     </includes>
-<!--                    <systemPropertiesFile>-->
-<!--                        ${project.parent.basedir}/player-service-core/src/main/resources/config/project.properties-->
-<!--                    </systemPropertiesFile>-->
-                    <threadCount>${thread.count}</threadCount> <!-- Read from properties file -->
-                    <parallel>${thread.parallel}</parallel>   <!-- Read from properties file -->
+                    <systemPropertiesFile>
+                        ${project.parent.basedir}/player-service-core/src/main/resources/config/project.properties
+                    </systemPropertiesFile>
+                    <threadCount>${thread.count}</threadCount>
+                    <parallel>${thread.parallel}</parallel>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-<!--                    <parallel>methods</parallel>-->
-<!--                    <threadCount>3</threadCount>-->
                 </configuration>
                 <dependencies>
                     <dependency>
