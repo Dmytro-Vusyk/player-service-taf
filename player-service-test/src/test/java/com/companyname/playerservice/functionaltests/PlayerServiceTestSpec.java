@@ -22,7 +22,7 @@ public class PlayerServiceTestSpec extends BaseTestSpec {
                 {PlayerEditors.ADMIN.getValue()}
         };
     }
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setupClass() {
         this.playerControllerEndpoint = PlayerServiceAPI.getAPI().getPlayerControllerEndpoint();
         this.faker = new Faker();
