@@ -1,0 +1,6 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"Player service implementation","Get Player","API consumer is able to get all Players","1","0","0","0","0"
+"Player service implementation","Delete Player","Admin or Supervisor is able to delete Player","3","0","1","0","0"
+"Player service implementation","Get Player","API consumer is able to get Player","2","0","1","0","0"
+"Player service implementation","Create Player","Admin or Supervisor is able to create Player","5","0","1","0","0"
+"Player service implementation","Update Player","API consumer is able to update Player","3","0","1","0","0"
