@@ -2,7 +2,7 @@ package com.companyname.playerservice.functionaltests.create;
 
 import com.companyname.assertions.TestAssertions;
 import com.companyname.enums.PlayerEditors;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
@@ -21,7 +21,9 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.NEGATIVE))
     @Test(groups = {TestGroups.NEGATIVE, TestGroups.BVT})
     public void testInvalidEditorCanNotCreatePlayer() {
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         var role = this.faker.getRandomString(10);
         var response = this.playerServiceActions.createPlayer(role, expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_FORBIDDEN);
@@ -34,7 +36,9 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.BUG))
     @Test(groups = {TestGroups.BUG, TestGroups.REG})
     public void testEditorCanCreatePlayerOlderThan() {
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         expectedPlayer.setAge(String.valueOf(this.faker.getRandomInt(61, 100)));
         var response = this.playerServiceActions.createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_OK);

@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.delete;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.models.playerserviceapi.PlayerItemDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.TestGroups;
@@ -23,7 +23,9 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testDeletePlayerById(String editor) {
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createPlayerWithRequiredFieldsOnly();
         var actualPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer, HttpStatus.SC_OK).getId();
         var deleteResponse = this.playerServiceActions.deletePlayer(editor, actualPlayerId);
 

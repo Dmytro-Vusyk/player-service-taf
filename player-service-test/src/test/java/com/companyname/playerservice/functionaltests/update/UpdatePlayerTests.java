@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.update;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.SchemaPath;
@@ -26,7 +26,9 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testEditorCanUpdatePlayer(String editor) {
-        var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var defaultPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         var createdPlayer = this.playerServiceActions.createPlayer(editor, defaultPlayer, HttpStatus.SC_OK);
         createdPlayerId.set(createdPlayer.getId());
 

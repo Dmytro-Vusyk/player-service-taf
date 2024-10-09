@@ -22,7 +22,7 @@ public class PlayerCreateRequestDTOFactory {
      *
      * @return the player create request dto
      */
-    public static PlayerCreateRequestDTO createDefaultPlayer() {
+    public PlayerCreateRequestDTO createDefaultPlayer() {
         var player = PlayerCreateRequestDTO.builder()
                 .age(String.valueOf(faker.number().numberBetween(18, 60)))
                 .editor(faker.options().option(PlayerEditors.class).getValue())
@@ -41,7 +41,7 @@ public class PlayerCreateRequestDTOFactory {
      *
      * @return the player create request dto
      */
-    public static PlayerCreateRequestDTO createPlayerWithRequiredFieldsOnly() {
+    public PlayerCreateRequestDTO createPlayerWithRequiredFieldsOnly() {
         var player = PlayerCreateRequestDTO.builder()
                 .age(String.valueOf(faker.number().numberBetween(18, 60)))
                 .editor(faker.options().option(PlayerEditors.class).getValue())
@@ -66,7 +66,7 @@ public class PlayerCreateRequestDTOFactory {
      * @param screenName the screen name
      * @return the player create request dto
      */
-    public static PlayerCreateRequestDTO createCustomPlayer(String age, String editor, String gender, String login, String password, String role, String screenName) {
+    public PlayerCreateRequestDTO createCustomPlayer(String age, String editor, String gender, String login, String password, String role, String screenName) {
         var player = PlayerCreateRequestDTO.builder()
                 .age(age)
                 .editor(editor)

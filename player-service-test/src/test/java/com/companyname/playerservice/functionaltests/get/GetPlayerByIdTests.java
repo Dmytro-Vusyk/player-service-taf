@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.get;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.SchemaPath;
@@ -27,7 +27,9 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void verifyThatUserCanRetrievePlayerById(String editor) {
 
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         var expectedPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer, HttpStatus.SC_OK).getId();
         createdPlayerId.set(expectedPlayerId);
 

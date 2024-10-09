@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.update;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.TestGroups;
@@ -24,7 +24,9 @@ public class UpdatePlayerNegativeTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
     public void testEditorCanNotUpdatePlayerByInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var defaultPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         var playerToUpdate = PlayerUpdateRequestDTO.builder()
                 .age(Integer.parseInt(defaultPlayer.getAge()))
                 .gender(defaultPlayer.getGender())

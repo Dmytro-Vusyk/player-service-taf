@@ -1,7 +1,7 @@
 package com.companyname.playerservice.functionaltests.create;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.factories.PlayerCreateRequestDTOFactory;
+import com.companyname.factories.PlayerFactory;
 import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.SchemaPath;
@@ -27,7 +27,9 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testPlayerWithAllFieldsCanBeCreated(String editor) {
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createDefaultPlayer();
         var actualResponse = this.playerServiceActions.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         var id = actualResponse.extract()
@@ -44,7 +46,9 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     @Tags(@Tag(TestGroups.SMOKE))
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testPlayerCanBeCreatedWithRequiredFieldsOnly(String editor) {
-        var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
+        var expectedPlayer = PlayerFactory.getInstance()
+                .buildCreatePayload()
+                .createPlayerWithRequiredFieldsOnly();
         var actualResponse = this.playerServiceActions.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         var id = actualResponse.extract()
