@@ -26,13 +26,13 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testDeletePlayerById(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualPlayerId = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer)
+        var actualPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer)
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(PlayerCreateResponseDTO.class)
                 .getId();
 
-        var deleteResponse = this.playerControllerEndpoint.deletePlayer(editor, actualPlayerId);
+        var deleteResponse = this.playerServiceActions.deletePlayer(editor, actualPlayerId);
 
         SoftAssertions.assertSoftly(assertions -> {
             TestAssertions.assertStatusCodeIs(deleteResponse,HttpStatus.SC_NO_CONTENT);
@@ -43,7 +43,7 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
             });
         });
 
-        var actualPlayers = this.playerControllerEndpoint.getAllPlayers()
+        var actualPlayers = this.playerServiceActions.getAllPlayers()
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .body()

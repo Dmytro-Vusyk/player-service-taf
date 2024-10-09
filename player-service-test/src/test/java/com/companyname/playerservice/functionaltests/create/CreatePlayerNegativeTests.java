@@ -23,7 +23,7 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     public void testInvalidEditorCanNotCreatePlayer() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         var role = this.faker.getRandomString(10);
-        var response = this.playerControllerEndpoint.createPlayer(role, expectedPlayer);
+        var response = this.playerServiceActions.createPlayer(role, expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_FORBIDDEN);
     }
 
@@ -36,7 +36,7 @@ public class CreatePlayerNegativeTests extends PlayerServiceTestSpec {
     public void testEditorCanCreatePlayerOlderThan() {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
         expectedPlayer.setAge(String.valueOf(this.faker.getRandomInt(61, 100)));
-        var response = this.playerControllerEndpoint.createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
+        var response = this.playerServiceActions.createPlayer(PlayerEditors.SUPERVISOR.getValue(), expectedPlayer);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_OK);
     }
 }

@@ -28,7 +28,7 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testPlayerWithAllFieldsCanBeCreated(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
+        var actualResponse = this.playerServiceActions.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         var id = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
@@ -45,7 +45,7 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testPlayerCanBeCreatedWithRequiredFieldsOnly(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualResponse = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer);
+        var actualResponse = this.playerServiceActions.createPlayer(editor, expectedPlayer);
         TestAssertions.assertStatusCodeIs(actualResponse, HttpStatus.SC_OK);
         var id = actualResponse.extract()
                 .as(PlayerCreateResponseDTO.class)
@@ -56,7 +56,7 @@ public class CreatePlayerTests extends PlayerServiceTestSpec {
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
+        this.playerServiceActions.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

@@ -29,7 +29,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testEditorCanUpdatePlayer(String editor) {
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var createdPlayer = this.playerControllerEndpoint.createPlayer(editor, defaultPlayer)
+        var createdPlayer = this.playerServiceActions.createPlayer(editor, defaultPlayer)
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .body()
@@ -49,11 +49,11 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
                 .screenName(defaultPlayer.getScreenName())
                 .build();
 
-        var playerUpdateResponse = this.playerControllerEndpoint.updatePlayer(editor, createdPlayer.getId(), playerToUpdate);
+        var playerUpdateResponse = this.playerServiceActions.updatePlayer(editor, createdPlayer.getId(), playerToUpdate);
         TestAssertions.assertStatusCodeIs(playerUpdateResponse, HttpStatus.SC_OK);
         TestAssertions.assertResponseMatchesJsonSchema(playerUpdateResponse, SchemaPath.UPDATE_PLAYER_RESPONSE_SCHEMA);
 
-        var actualPlayer = this.playerControllerEndpoint.getPlayerById(createdPlayer.getId())
+        var actualPlayer = this.playerServiceActions.getPlayerById(createdPlayer.getId())
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .body()
@@ -73,7 +73,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
+        this.playerServiceActions.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

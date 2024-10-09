@@ -29,7 +29,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
     public void verifyThatUserCanRetrievePlayerById(String editor) {
 
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var expectedPlayerId = this.playerControllerEndpoint.createPlayer(editor, expectedPlayer)
+        var expectedPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer)
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .as(PlayerCreateResponseDTO.class)
@@ -37,7 +37,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
         createdPlayerId.set(expectedPlayerId);
 
-        var playerByIdResponse = this.playerControllerEndpoint.getPlayerById(expectedPlayerId);
+        var playerByIdResponse = this.playerServiceActions.getPlayerById(expectedPlayerId);
         TestAssertions.assertStatusCodeIs(playerByIdResponse, HttpStatus.SC_OK);
         TestAssertions.assertResponseMatchesJsonSchema(playerByIdResponse, SchemaPath.GET_PLAYER_BY_ID_RESPONSE_SCHEMA);
 
@@ -58,7 +58,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
     @AfterMethod()
     void cleanupTest(Object[] args) {
-        this.playerControllerEndpoint.deletePlayer(args[0].toString(), createdPlayerId.get())
+        this.playerServiceActions.deletePlayer(args[0].toString(), createdPlayerId.get())
                 .statusCode(HttpStatus.SC_NO_CONTENT);
     }
 }

@@ -21,7 +21,7 @@ public class DeletePlayerNegativeTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.NEGATIVE})
     public void testDeletePlayerByInvalidId(String editor) {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        var response = this.playerControllerEndpoint.deletePlayer(editor, randomPlayerId);
+        var response = this.playerServiceActions.deletePlayer(editor, randomPlayerId);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }

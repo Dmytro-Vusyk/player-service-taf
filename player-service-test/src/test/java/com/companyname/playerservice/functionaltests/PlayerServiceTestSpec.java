@@ -4,6 +4,7 @@ import com.companyname.BaseTestSpec;
 import com.companyname.PlayerServiceAPI;
 import com.companyname.endpoints.PlayerControllerEndpoint;
 import com.companyname.enums.PlayerEditors;
+import com.companyname.playerserviceapi.actions.PlayerServiceApiActions;
 import com.companyname.utils.Faker;
 import io.qameta.allure.Epic;
 import org.testng.annotations.BeforeClass;
@@ -12,7 +13,7 @@ import org.testng.annotations.DataProvider;
 @Epic("Player service implementation")
 public class PlayerServiceTestSpec extends BaseTestSpec {
 
-    protected PlayerControllerEndpoint playerControllerEndpoint;
+    protected PlayerServiceApiActions playerServiceActions;
     protected Faker faker;
 
     @DataProvider(name = "editorProvider")
@@ -24,7 +25,7 @@ public class PlayerServiceTestSpec extends BaseTestSpec {
     }
     @BeforeClass(alwaysRun = true)
     public void setupClass() {
-        this.playerControllerEndpoint = PlayerServiceAPI.getAPI().getPlayerControllerEndpoint();
+        this.playerServiceActions = new PlayerServiceApiActions();
         this.faker = new Faker();
     }
 }

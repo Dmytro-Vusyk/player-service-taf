@@ -22,7 +22,7 @@ public class GetPlayerByIdNegativeTests extends PlayerServiceTestSpec {
     @Test(groups = {TestGroups.NEGATIVE, TestGroups.REG})
     public void testGetNonExistentPlayerById() {
         var randomPlayerId = Faker.instance().random().nextLong(Long.MAX_VALUE);
-        var response = this.playerControllerEndpoint.getPlayerById(randomPlayerId);
+        var response = this.playerServiceActions.getPlayerById(randomPlayerId);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }

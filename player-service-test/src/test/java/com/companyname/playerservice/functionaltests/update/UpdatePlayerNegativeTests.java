@@ -34,7 +34,7 @@ public class UpdatePlayerNegativeTests extends PlayerServiceTestSpec {
                 .screenName(defaultPlayer.getScreenName())
                 .build();
 
-        var response = this.playerControllerEndpoint.updatePlayer(editor, randomPlayerId, playerToUpdate);
+        var response = this.playerServiceActions.updatePlayer(editor, randomPlayerId, playerToUpdate);
         TestAssertions.assertStatusCodeIs(response, HttpStatus.SC_NOT_FOUND);
     }
 }
