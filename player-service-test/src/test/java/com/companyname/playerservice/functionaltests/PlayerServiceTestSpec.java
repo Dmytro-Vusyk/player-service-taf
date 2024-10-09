@@ -1,8 +1,6 @@
 package com.companyname.playerservice.functionaltests;
 
 import com.companyname.BaseTestSpec;
-import com.companyname.PlayerServiceAPI;
-import com.companyname.endpoints.PlayerControllerEndpoint;
 import com.companyname.enums.PlayerEditors;
 import com.companyname.playerserviceapi.actions.PlayerServiceApiActions;
 import com.companyname.utils.Faker;
@@ -23,6 +21,7 @@ public class PlayerServiceTestSpec extends BaseTestSpec {
                 {PlayerEditors.ADMIN.getValue()}
         };
     }
+
     @BeforeClass(alwaysRun = true)
     public void setupClass() {
         this.playerServiceActions = new PlayerServiceApiActions();

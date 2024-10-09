@@ -2,7 +2,6 @@ package com.companyname.playerservice.functionaltests.get;
 
 import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
-import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.SchemaPath;
@@ -29,12 +28,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
     public void verifyThatUserCanRetrievePlayerById(String editor) {
 
         var expectedPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var expectedPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer)
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(PlayerCreateResponseDTO.class)
-                .getId();
-
+        var expectedPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer, HttpStatus.SC_OK).getId();
         createdPlayerId.set(expectedPlayerId);
 
         var playerByIdResponse = this.playerServiceActions.getPlayerById(expectedPlayerId);
@@ -43,7 +37,7 @@ public class GetPlayerByIdTests extends PlayerServiceTestSpec {
 
         var actualPlayer = playerByIdResponse.extract().body().as(PlayerGetByPlayerIdResponseDTO.class);
 
-        Allure.step("Verify GET player by id call returns correct player information", () ->{
+        Allure.step("Verify GET player by id call returns correct player information", () -> {
             SoftAssertions.assertSoftly(assertions -> {
                 assertions.assertThat(actualPlayer.getAge().toString()).isEqualTo(expectedPlayer.getAge());
                 assertions.assertThat(actualPlayer.getGender()).isEqualTo(expectedPlayer.getGender());

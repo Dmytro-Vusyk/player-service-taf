@@ -2,8 +2,6 @@ package com.companyname.playerservice.functionaltests.update;
 
 import com.companyname.assertions.TestAssertions;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
-import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
-import com.companyname.models.playerserviceapi.PlayerGetByPlayerIdResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerUpdateRequestDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
 import com.companyname.testutils.SchemaPath;
@@ -29,12 +27,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testEditorCanUpdatePlayer(String editor) {
         var defaultPlayer = PlayerCreateRequestDTOFactory.createDefaultPlayer();
-        var createdPlayer = this.playerServiceActions.createPlayer(editor, defaultPlayer)
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .body()
-                .as(PlayerCreateResponseDTO.class);
-
+        var createdPlayer = this.playerServiceActions.createPlayer(editor, defaultPlayer, HttpStatus.SC_OK);
         createdPlayerId.set(createdPlayer.getId());
 
         var expectedAge = this.faker.getRandomInt(20, 60);
@@ -53,11 +46,7 @@ public class UpdatePlayerTests extends PlayerServiceTestSpec {
         TestAssertions.assertStatusCodeIs(playerUpdateResponse, HttpStatus.SC_OK);
         TestAssertions.assertResponseMatchesJsonSchema(playerUpdateResponse, SchemaPath.UPDATE_PLAYER_RESPONSE_SCHEMA);
 
-        var actualPlayer = this.playerServiceActions.getPlayerById(createdPlayer.getId())
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .body()
-                .as(PlayerGetByPlayerIdResponseDTO.class);
+        var actualPlayer = this.playerServiceActions.getPlayerById(createdPlayer.getId(), HttpStatus.SC_OK);
 
         Allure.step("Verify that fields are changed", () -> {
             SoftAssertions.assertSoftly(assertions -> {

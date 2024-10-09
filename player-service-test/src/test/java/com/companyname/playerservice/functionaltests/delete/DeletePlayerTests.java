@@ -1,12 +1,10 @@
 package com.companyname.playerservice.functionaltests.delete;
 
 import com.companyname.assertions.TestAssertions;
-import com.companyname.testutils.TestGroups;
 import com.companyname.factories.PlayerCreateRequestDTOFactory;
-import com.companyname.models.playerserviceapi.PlayerCreateResponseDTO;
 import com.companyname.models.playerserviceapi.PlayerItemDTO;
-import com.companyname.models.playerserviceapi.PlayersDTO;
 import com.companyname.playerservice.functionaltests.PlayerServiceTestSpec;
+import com.companyname.testutils.TestGroups;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import io.qameta.allure.testng.Tags;
@@ -26,29 +24,19 @@ public class DeletePlayerTests extends PlayerServiceTestSpec {
     @Test(dataProvider = "editorProvider", groups = {TestGroups.SMOKE, TestGroups.BVT})
     public void testDeletePlayerById(String editor) {
         var expectedPlayer = PlayerCreateRequestDTOFactory.createPlayerWithRequiredFieldsOnly();
-        var actualPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer)
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .as(PlayerCreateResponseDTO.class)
-                .getId();
-
+        var actualPlayerId = this.playerServiceActions.createPlayer(editor, expectedPlayer, HttpStatus.SC_OK).getId();
         var deleteResponse = this.playerServiceActions.deletePlayer(editor, actualPlayerId);
 
         SoftAssertions.assertSoftly(assertions -> {
-            TestAssertions.assertStatusCodeIs(deleteResponse,HttpStatus.SC_NO_CONTENT);
-            Allure.step("Verify that body is null", () ->{
+            TestAssertions.assertStatusCodeIs(deleteResponse, HttpStatus.SC_NO_CONTENT);
+            Allure.step("Verify that body is null", () -> {
                 assertions.assertThat(deleteResponse.extract().response().getBody().asString())
                         .as("Verify that body is null")
                         .isEmpty();
             });
         });
 
-        var actualPlayers = this.playerServiceActions.getAllPlayers()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .body()
-                .as(PlayersDTO.class)
-                .getPlayers();
+        var actualPlayers = this.playerServiceActions.getAllPlayers(HttpStatus.SC_OK).getPlayers();
 
         Assertions.assertThat(actualPlayers)
                 .extracting(PlayerItemDTO::getId)
